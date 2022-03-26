@@ -17,6 +17,7 @@
         }
         ?>
         <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="inscription.php">Inscription</a>
+        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="ajout_jeu.php">Ajouter un jeu</a>
       </div>
     </div>
   </div>
@@ -42,7 +43,7 @@
               Genre
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="genre.php">Action</a>
               <a class="dropdown-item" href="#">Aventure</a>
               <a class="dropdown-item" href="#">Hack & slash</a>
               <a class="dropdown-item" href="#">Horreur</a>
