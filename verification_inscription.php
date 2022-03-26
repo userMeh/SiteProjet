@@ -35,20 +35,33 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
 
         } else {
           if ($_POST['mdp'] == $_POST['confirmation']) {
+            $minuscule = preg_match("/[a-z]+/", $_POST["mdp"]);
+            $majuscule = preg_match("/[A-Z]+/", $_POST["mdp"]);
+            $chiffre = preg_match("/[0-9]+/", $_POST["mdp"]);
 
-            $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp) VALUES(:pseudo, :email, :mdp)');
-            $result=$request->execute([
-              'pseudo' => $_POST['pseudo'],
-              'email' => $_POST['email'],
-              'mdp' => hash('sha512', $_POST['mdp'])
-            ]);
+            if($minuscule == 1 || $majuscule == 1 && $chiffre == 1){
 
-            if($result){
-              $message="succès";
-              header('location:inscription.php?message='.$message);
-              exit;
+              $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp, prix, type) VALUES (:pseudo, :email, :mdp, :prix, :type)');
+              $result=$request->execute([
+                'pseudo' => $_POST['pseudo'],
+                'email' => $_POST['email'],
+                'mdp' => hash('sha512', $_POST['mdp']),
+                'prix' => 0,
+                'type' => 'utilisateur'
+              ]);
+
+              if($result){
+                $message="succès";
+                header('location:inscription.php?message='.$message);
+                exit;
+              } else {
+                $message="Erreur lors de l'inscription";
+                header('location:inscription.php?message='.$message);
+                exit;
+              }
+
             } else {
-              $message="Erreur lors de l'inscription";
+              $message="Le mot de passe doit contenir au moins une lettre et un chiffre";
               header('location:inscription.php?message='.$message);
               exit;
             }
