@@ -40,7 +40,7 @@
           </div>
 
           <div class="row">
-            <label for="imagePrincipale" class="form-label">image carousel</label>
+            <label for="carousel" class="form-label">image carousel</label>
             <div class="col-4">
               <input class="form-control" name="carousel1" type="file" accept="image/jpeg">
             </div>

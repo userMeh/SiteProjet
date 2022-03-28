@@ -69,7 +69,7 @@
 
           <div class="col-md col-sm-6 mb-3">
             <div class="card">
-              <img class="rounded img-fluid" src="images/Monark.png">
+              <a href="page_jeu.php?Elden Ring"><img class="rounded img-fluid" src="imageJeux/Elden Ring0.jpg"></a>
             </div>
           </div>
 
