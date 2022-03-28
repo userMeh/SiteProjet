@@ -80,6 +80,11 @@
             <input type="text" name="directX" class="form-control" required>
           </div>
 
+          <div class="mb-3">
+            <label for="redirection" class="form-label">Redirection</label>
+            <input type="text" name="redirection" class="form-control" required>
+          </div>
+
           <button type="submit" class="btn btn-primary btn-lg">Valider</button>
         </form>
 

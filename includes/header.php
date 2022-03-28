@@ -1,14 +1,17 @@
 <?php session_start(); ?>
 <div class="container-fluid intro">
   <div class="row">
-    <div class="col-4 col-md-1">
+    <div class="col-4 col-md-1"></div>
+    <div class="col-4 col-md-1 d-flex justify-content-center">
+      <a href="index.php"><img src="images/Logic.png" class="img-fluid"></a>
     </div>
-    <img src="images/Logic.png" class="img-fluid col-4 col-md-1">
-    <div class="col-12 col-md-8">
+
+    <div class="col-12 col-md-9">
       <form class="d-flex">
         <input class="form-control form-control-lg" type="search" placeholder="Meh Dan" aria-label="Search">
         <button class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
       </form>
+      <div class="col-md-1"></div>
       <div class="row">
         <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['pseudo'])){
           echo 'href="profil.php">Profil</a>';

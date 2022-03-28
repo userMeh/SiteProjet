@@ -68,7 +68,8 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
   move_uploaded_file($_FILES['carousel3']['tmp_name'], $destination);
 
 
-  $request=$bdd->prepare('INSERT INTO JEUX(nom, synopsis, date_sortie, developpeur, note, nb_note, image, systeme, processeur, memoire, graphique, directX, carousel1, carousel2, carousel3) VALUES (:nom, :synopsis, :date_sortie, :developpeur, :note, :nb_note, :image, :systeme, :processeur, :memoire, :graphique, :directX, :carousel1, :carousel2, :carousel3)');
+  $request=$bdd->prepare('INSERT INTO JEUX(nom, synopsis, date_sortie, developpeur, note, nb_note, image, systeme, processeur, memoire, graphique, directX, carousel1, carousel2, carousel3, redirection, nb_vues)
+                                   VALUES (:nom, :synopsis, :date_sortie, :developpeur, :note, :nb_note, :image, :systeme, :processeur, :memoire, :graphique, :directX, :carousel1, :carousel2, :carousel3, :redirection, :nb_vues)');
   $result=$request->execute([
     'nom' => $_POST['nom'],
     'synopsis' => $_POST['synopsis'],
@@ -84,7 +85,9 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
     'directX' => $_POST['directX'],
     'carousel1' => $carousel1,
     'carousel2' => $carousel2,
-    'carousel3' => $carousel3
+    'carousel3' => $carousel3,
+    'redirection' => $_POST['redirection'],
+    'nb_vues' => 0
   ]);
 
   if($result){

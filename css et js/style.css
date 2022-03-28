@@ -12,7 +12,7 @@
 }
 
 html{
-  font-family: "poppins-normal";
+  font-family: "poppins-normal" !important;
 }
 
 body{
@@ -51,4 +51,22 @@ body{
 
 .intro .col-4 img{
   padding-bottom: 20px;
+  justify-content: center;
+}
+
+.logo .col-md-1{
+  width: 100% !important;
+}
+
+.images{
+  width: 75%;
+  height: 75%;
+  text-align: center;
+}
+
+.containerhelp{
+  padding: 20px;
+  background: black;
+  color: white;
+  text-align: center;
 }
