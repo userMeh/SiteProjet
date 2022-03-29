@@ -15,7 +15,7 @@
 
           <div class="mb-3">
             <label for="pseudo" class="form-label">Pseudo</label>
-            <input type="text" name="pseudo" class="form-control" id="email" placeholder="Votre pseudo" value="<?= isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '' ?>" required>
+            <input type="text" name="pseudo" class="form-control" id="pseudo" placeholder="Votre pseudo" value="<?= isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '' ?>" required>
           </div>
 
           <div class="mb-3">

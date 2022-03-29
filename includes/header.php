@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include "includes/bdd.php";
+?>
 <div class="container-fluid intro">
   <div class="row">
     <div class="col-4 col-md-1"></div>
@@ -46,20 +49,39 @@
               Genre
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="genre.php">Action</a>
-              <a class="dropdown-item" href="#">Aventure</a>
-              <a class="dropdown-item" href="#">Hack & slash</a>
-              <a class="dropdown-item" href="#">Horreur</a>
-              <a class="dropdown-item" href="#">Management</a>
-              <a class="dropdown-item" href="#">Open World / Sandbox</a>
-              <a class="dropdown-item" href="#">Course</a>
-              <a class="dropdown-item" href="#">RPG</a>
-              <a class="dropdown-item" href="#">STR</a>
-              <a class="dropdown-item" href="#">FPS</a>
-              <a class="dropdown-item" href="#">Simulation</a>
-              <a class="dropdown-item" href="#">Stratégie</a>
-              <a class="dropdown-item" href="#">Survie</a>
-              <a class="dropdown-item" href="#">Visual novel</a>
+              <?php
+              $query = $bdd -> query('SELECT nom FROM GENRE');   //Compte le nombre de genre
+              $fetch = $query -> fetchAll();
+              $count = count($fetch);
+
+                $sql = 'SELECT nom FROM GENRE';               // Rajoute les genre dans le scrolldown
+                $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+                $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+                  for ($i=0; $i < $count-1; $i++) {
+                    $data = $row[$i];
+                    echo '<li><a class="dropdown-item" href="genre.php?genre='.$data.'">'.$data.'</a></li>';
+                  }
+                }
+              ?>
+              <!--
+              <li><a class="dropdown-item" href="genre.php">Action</a></li>
+              <li><a class="dropdown-item" href="#">Aventure</a></li>
+              <li><a class="dropdown-item" href="#">Hack & slash</a></li>
+              <li><a class="dropdown-item" href="#">Horreur</a></li>
+              <li><a class="dropdown-item" href="#">Management</a></li>
+              <li><a class="dropdown-item" href="#">Open World / Sandbox</a></li>
+              <li><a class="dropdown-item" href="#">Course</a></li>
+              <li><a class="dropdown-item" href="#">RPG</a></li>
+              <li><a class="dropdown-item" href="#">STR</a></li>
+              <li><a class="dropdown-item" href="#">FPS</a></li>
+              <li><a class="dropdown-item" href="#">Simulation</a></li>
+              <li><a class="dropdown-item" href="#">Stratégie</a></li>
+              <li><a class="dropdown-item" href="#">Survie</a></li>
+              <li><a class="dropdown-item" href="#">Visual novel</a></li>
+              -->
+              <li><hr class="dropdown-divider"></li>
+              <li><a class=dropdown-item href="ajout_genre.php">Ajouter un genre</a></li>
             </ul>
             <li class="nav-item">
               <a class="nav-link" href="#">Liste de jeux</a>

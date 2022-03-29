@@ -2,19 +2,45 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <?php include "includes/bootstrap.php" ?>
-    <title>Action</title>
+    <?php
+    include "includes/bootstrap.php";
+    include "includes/bdd.php";
+
+    if (isset($_GET['genre'])) {          //Pour verifier si le genre existe et eviter les injections sql
+      $genre=$_GET['genre'];
+      $exist=$bdd->prepare('SELECT nom FROM GENRE WHERE nom=?');
+      $exist->execute([
+        $genre
+      ]);
+      $result=$exist->fetchAll();
+      if(count($result) != 1){
+        header('location:index.php');
+        exit;
+      }
+    } else {
+      header('location:index.php');
+      exit;
+    }
+
+    ?>
+
+    <title><?php echo $genre ?></title>
   </head>
   <body>
     <?php include "includes/header.php" ?>
 
     <main class="container p-5">
       <br>
+      <h1 class="d-flex justify-content-center"><?php echo $genre ?></h1>
       <div>
+        <br>
         <p>
-          Le jeu d'action est un genre de jeu vidéo dont le gameplay est fondé sur des interactions en temps réel et qui fait essentiellement appel à l'habileté et aux réflexes du joueur.
-
-          Le terme tend en particulier à désigner les jeux mettant en œuvre des confrontations violentes, comme les shoot them up, les jeux de combat ou les jeux de tir à la première personne (FPS), mais son champ s'étend en fait à des types de jeux très variés, comme les casse-briques, les jeux de labyrinthe, les jeux de plates-formes, les jeux de course, les jeux de sport, etc., et dont beaucoup ne sont pas sous-catégorisés. Le jeu d'action est de loin le genre de jeu vidéo le plus représenté.
+          <?php
+          $query = $bdd -> query('SELECT description FROM GENRE WHERE nom= "'. $genre .'"');
+          while($req = $query -> fetch(PDO::FETCH_OBJ)){
+            echo $req->description;
+          }
+          ?>
         </p>
       </div>
     </main>

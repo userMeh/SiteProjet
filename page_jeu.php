@@ -4,8 +4,9 @@
   <meta charset="utf-8">
 
   <?php
-  include "includes/bootstrap.php";
   include "includes/bdd.php";
+  include "includes/bootstrap.php";
+
   if (isset($_GET['jeu'])) {          //Pour verifier si le jeu existe et eviter les injections sql
     $jeu=$_GET['jeu'];
     $exist=$bdd->prepare('SELECT nom FROM JEUX WHERE nom=?');
