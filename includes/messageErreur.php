@@ -12,6 +12,14 @@ if (isset($_GET['message'])) {
     echo '<div class="alert alert-success mt-4" role="alert">';
     echo "Le genre a été ajouté";
     echo '</div>';
+  } else if ($_GET['message']=='succès modification') {
+    echo '<div class="alert alert-success mt-4" role="alert">';
+    echo "Les modifications ont bien été effectuées";
+    echo '</div>';
+  } else if ($_GET['message']=='succès suppression') {
+    echo '<div class="alert alert-success mt-4" role="alert">';
+    echo "L'utilisateur a bien été supprimer";
+    echo '</div>';
   } else {
     if (isset($_GET['message'])) {
       echo '<div class="alert alert-danger mt-4" role="alert">';

@@ -41,13 +41,17 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
 
             if($minuscule == 1 || $majuscule == 1 && $chiffre == 1){
 
-              $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp, prix, type) VALUES (:pseudo, :email, :mdp, :prix, :type)');
+              date_default_timezone_set('Europe/Paris');
+              $date_creation = date('d/m/Y, H:i:s');
+
+              $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp, prix, type, date_creation) VALUES (:pseudo, :email, :mdp, :prix, :type, :date_creation)');
               $result=$request->execute([
                 'pseudo' => $_POST['pseudo'],
                 'email' => $_POST['email'],
                 'mdp' => hash('sha512', $_POST['mdp']),
                 'prix' => 0,
-                'type' => 'utilisateur'
+                'type' => 'utilisateur',
+                'date_creation' => $date_creation
               ]);
 
               if($result){

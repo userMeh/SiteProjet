@@ -50,19 +50,13 @@ include "includes/bdd.php";
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <?php
-              $query = $bdd -> query('SELECT nom FROM GENRE');   //Compte le nombre de genre
-              $fetch = $query -> fetchAll();
+              $query = $bdd -> query('SELECT nom FROM GENRE');
+              $fetch = $query -> fetchAll(PDO::FETCH_COLUMN);
               $count = count($fetch);
 
-                $sql = 'SELECT nom FROM GENRE';               // Rajoute les genre dans le scrolldown
-                $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-                $stmt->execute();
-                while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-                  for ($i=0; $i < $count-1; $i++) {
-                    $data = $row[$i];
-                    echo '<li><a class="dropdown-item" href="genre.php?genre='.$data.'">'.$data.'</a></li>';
-                  }
-                }
+              for ($i=0; $i < $count; $i++) {
+                echo '<li><a class="dropdown-item" href="genre.php?genre='.$fetch[$i].'">'.$fetch[$i].'</a></li>';
+              }
               ?>
               <!--
               <li><a class="dropdown-item" href="genre.php">Action</a></li>
@@ -84,11 +78,19 @@ include "includes/bdd.php";
               <li><a class=dropdown-item href="ajout_genre.php">Ajouter un genre</a></li>
             </ul>
             <li class="nav-item">
-              <a class="nav-link" href="#">Liste de jeux</a>
+              <a class="nav-link" href="liste_jeux.php">Liste de jeux</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Votre bibliothèque</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="liste_utilisateurs.php">Liste utilisateurs</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link" href="test.php">TEST</a>
+            </li>
+          -->
           </ul>
         </div>
       </div>

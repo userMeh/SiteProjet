@@ -18,7 +18,7 @@ html{
 body{
   margin: 0;
   padding: 0;
-  background: #0D55AD;
+  background-image: linear-gradient(to bottom, #0632d1, #000000);
 }
 
 #tendance{
@@ -60,7 +60,6 @@ body{
 
 .images{
   width: 75%;
-  height: 75%;
   text-align: center;
 }
 
@@ -69,4 +68,13 @@ body{
   background: black;
   color: white;
   text-align: center;
+}
+
+.popup{
+  color: black;
+}
+
+.card a{
+  text-decoration: none;
+  color: white;
 }
