@@ -2,6 +2,39 @@
 
 include ('includes/bdd.php');
 
+if(isset($_GET['cle'])){
+  $cle = $_GET['cle'];
+
+  $query = $bdd -> prepare('SELECT pseudo FROM UTILISATEURS WHERE cle_verif=:cle_verif');
+  $query -> execute([
+    'cle_verif' => $cle
+  ]);
+
+  $exist = $query->fetchAll();
+  if(count($exist) != 1 ){
+    $message="Erreur lors de l'inscription";
+    header('location:inscription.php?message='.$message);
+    exit;
+  } else {
+    $query = $bdd -> prepare('SELECT verifie FROM UTILISATEURS WHERE cle_verif=:cle_verif');
+    $query -> execute([
+      'cle_verif' => $cle
+    ]);
+
+    $verifie = $query -> fetchAll(PDO::FETCH_COLUMN);
+    if($verifie[0]!='non'){
+      $message="Votre compte est déjà verifié";
+      header('location:inscription.php?message='.$message);
+      exit;
+    } else {
+      $bdd -> query('UPDATE UTILISATEURS SET verifie="oui" WHERE cle_verif="'.$cle.'"');
+      $message="succès compte 2";
+      header('location:inscription.php?message='.$message);
+      exit;
+    }
+  }
+}
+
 if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
   $message="Votre email n'est pas valide";
   header('location:inscription.php?message='.$message);
@@ -43,19 +76,24 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
 
               date_default_timezone_set('Europe/Paris');
               $date_creation = date('d/m/Y, H:i:s');
+              $vCle = md5(time().$_POST['pseudo']);
 
-              $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp, prix, type, date_creation) VALUES (:pseudo, :email, :mdp, :prix, :type, :date_creation)');
+              $request=$bdd->prepare('INSERT INTO UTILISATEURS(pseudo, email, mdp, prix, type, date_creation, verifie, cle_verif) VALUES (:pseudo, :email, :mdp, :prix, :type, :date_creation, :verifie, :cle_verif)');
               $result=$request->execute([
                 'pseudo' => $_POST['pseudo'],
                 'email' => $_POST['email'],
                 'mdp' => hash('sha512', $_POST['mdp']),
                 'prix' => 0,
                 'type' => 'utilisateur',
-                'date_creation' => $date_creation
+                'date_creation' => $date_creation,
+                'verifie' => 'non',
+                'cle_verif' => $vCle
               ]);
 
+              include "includes/mail.php";
+
               if($result){
-                $message="succès";
+                $message="succès compte 1";
                 header('location:inscription.php?message='.$message);
                 exit;
               } else {

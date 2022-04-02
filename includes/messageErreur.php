@@ -1,8 +1,12 @@
 <?php
 if (isset($_GET['message'])) {
-  if ($_GET['message']=='succès') {
+  if ($_GET['message']=='succès compte 1') {
     echo '<div class="alert alert-success mt-4" role="alert">';
-    echo "Compte créé avec succès";
+    echo "Un mail de vérification a été envoyé";
+    echo '</div>';
+  } else if ($_GET['message']=='succès compte 2') {
+    echo '<div class="alert alert-success mt-4" role="alert">';
+    echo "Votre compte a bien été vérifié";
     echo '</div>';
   } else if ($_GET['message']=='succès jeu') {
     echo '<div class="alert alert-success mt-4" role="alert">';

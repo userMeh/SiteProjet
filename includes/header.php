@@ -6,12 +6,12 @@ include "includes/bdd.php";
   <div class="row">
     <div class="col-4 col-md-1"></div>
     <div class="col-4 col-md-1 d-flex justify-content-center">
-      <a href="index.php"><img src="images/Logic.png" class="img-fluid"></a>
+      <a href="index.php"><img src="images/Logic.logo.png" class="img-fluid"></a>
     </div>
 
     <div class="col-12 col-md-9">
       <form class="d-flex">
-        <input class="form-control form-control-lg" type="search" placeholder="Meh Dan" aria-label="Search">
+        <input class="form-control form-control-lg" type="search" placeholder="Barre de recherche" aria-label="Search">
         <button class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
       </form>
       <div class="col-md-1"></div>
@@ -86,11 +86,9 @@ include "includes/bdd.php";
             <li class="nav-item">
               <a class="nav-link" href="liste_utilisateurs.php">Liste utilisateurs</a>
             </li>
-            <!--
             <li class="nav-item">
               <a class="nav-link" href="test.php">TEST</a>
             </li>
-          -->
           </ul>
         </div>
       </div>

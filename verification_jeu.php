@@ -2,7 +2,6 @@
 
 include ('includes/bdd.php');
 
-
 $doublon=$bdd->prepare('SELECT nom FROM JEUX WHERE nom=?');
 $doublon->execute([
   $_POST['nom']
@@ -14,26 +13,28 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
   header('location:ajout_jeu.php?message='.$message);
   exit;
 
-  $array = explode('/', $_POST['date_sortie']);
-  if (count($array) != 3) {
-    $message="La date de sortie n'est pas écrit dans le bon format";
-    header('location:ajout_jeu.php?message='.$message);
-    exit;
-  } else {
-    $jour = current($array);
-    $mois = next($array);
-    $annee = next($array);
+} else {
 
-    if ($jour <=31 && $mois <= 12 && $annee <= date('Y')) {
-      $date_sortie = $jour .'/'. $mois .'/'. $annee;
-    } else {
-      $message="Les informations de la date de sortie sont invalides";
+  if(isset($_POST['genre'])){
+
+    $array = explode('/', $_POST['date_sortie']);
+    if (count($array) != 3) {
+      $message="La date de sortie n'est pas écrit dans le bon format";
       header('location:ajout_jeu.php?message='.$message);
       exit;
+    } else {
+      $jour = current($array);
+      $mois = next($array);
+      $annee = next($array);
+
+      if ($jour <=31 && $mois <= 12 && $annee <= date('Y')) {
+        $date_sortie = $jour .'/'. $mois .'/'. $annee;
+      } else {
+        $message="Les informations de la date de sortie sont invalides";
+        header('location:ajout_jeu.php?message='.$message);
+        exit;
+      }
     }
-  }
-} else {
-  if(isset($_POST['genre'])){
 
     $uploadsPath = 'imageJeux';
     if(!file_exists($uploadsPath)){

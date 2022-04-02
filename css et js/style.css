@@ -13,12 +13,22 @@
 
 html{
   font-family: "poppins-normal" !important;
+  overflow-x: hidden;
 }
 
 body{
   margin: 0;
   padding: 0;
+}
+
+main{
   background-image: linear-gradient(to bottom, #0632d1, #000000);
+}
+
+footer{
+  background-color: black;
+  color: white;
+  margin: 0;
 }
 
 #tendance{

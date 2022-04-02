@@ -10,105 +10,67 @@
 </head>
 
 <body>
-  
+
 
   <?php include "includes/header.php" ?>
 
-  <br>
-  <h2 class="d-flex justify-content-center">Liste d'utilisateurs</h2>
+  <?php
+
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+
+  require 'phpmailer/src/Exception.php';
+  require 'phpmailer/src/PHPMailer.php';
+  require 'phpmailer/src/SMTP.php';
+
+  $mail = new PHPMailer(true);
+  $vCle = '1234';
+
+  try {
+      //Server settings
+      $mail->SMTPDebug = 0;                                       //Enable verbose debug output
+      $mail->isSMTP();                                            //Send using SMTP
+      $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+      $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+      $mail->Username   = 'Logic.Gaming.Projet@gmail.com';        //SMTP username
+      $mail->Password   = 'PSQS2022';                             //SMTP password
+      $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
+      $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+      //Recipients
+      $mail->setFrom('ne-pas-repondre@Logic-Gaming.fr', 'Finalisation inscription');
+      //$mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
+      $mail->addAddress('szhang0709@gmail.com');               //Name is optional
+      //$mail->addReplyTo('info@example.com', 'Information');
+      //$mail->addCC('cc@example.com');
+      //$mail->addBCC('bcc@example.com');
+
+      //Attachments
+      //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+      //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+      //Content
+      $mail->isHTML(true);                                  //Set email format to HTML
+      $mail->Subject = 'Verification compte Logic-Gaming';
+      $mail->Body    = '<h2>Vous avez créée un compte sur Logic-Gaming</h2>
+                        <br>
+                        <p>Veuillez finaliser la création de votre compte en cliquant <a href="http://localhost/Projet%20annuel/inscription.php?message='.$vCle.'">ici</a><p>';
+      //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+      $mail->send();
+  } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
+
+  ?>
+
   <div>
+    <main>
+      <div class="container p-5">
 
-    <?php
-    $query = $bdd -> query('SELECT pseudo FROM UTILISATEURS');   //Compte le nombre d'utilisateurs et recupere les pseudos
-    $pseudo = $query -> fetchAll(PDO::FETCH_COLUMN);
-    $users = count($pseudo);
-
-    $query = $bdd -> query('SELECT email FROM UTILISATEURS');
-    $email = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-    $query = $bdd -> query('SELECT type FROM UTILISATEURS');
-    $type = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-    $query = $bdd -> query('SELECT date_creation FROM UTILISATEURS');
-    $date_creation = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-    ?>
-
-    <table class="table table-dark table-striped mt-5">
-      <thead>
-        <tr>
-          <th scope="col">Nom d'utilisateur</th>
-          <th scope="col">Email</th>
-          <th scope="col">Type d'utilisateur</th>
-          <th scope="col">Date de création</th>
-          <th scope="col">Modification</th>
-        </tr>
-      </thead>
-      <tbody>
-        <a href="#"></a>
-        <?php
-        for ($i=0; $i < $users; $i++) {
-          echo
-          '<tr>
-            <th scope="row">'.$pseudo[$i].'</th>
-            <td>'.$email[$i].'</td>
-            <td>'.$type[$i].'</td>
-            <td>'.$date_creation[$i].'</td>
-            <td>
-              <a href="modification.php?='.$pseudo[$i].'/modify" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Editer</a>
-              <a href="modification.php?='.$pseudo[$i].'/delete" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Supprimer</a>
-            </td>
-          </tr>';
-        }
-        ?>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </tbody>
-    </table>
-
-  </div>
-
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
       </div>
-    </div>
-  </div>
-
+    </main>
+    <footer><?php include "includes/footer.php" ?></footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
