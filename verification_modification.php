@@ -47,7 +47,7 @@ if(isset($_GET['modify'])){
   $delete -> execute([
     'pseudo'=>$_GET['delete']
   ]);
-  $message="succès suppression";
+  $message="succès suppression utilisateur";
   header('location:liste_utilisateurs.php?message='.$message);
   exit;
 } else {

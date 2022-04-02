@@ -9,58 +9,39 @@
     <link rel="stylesheet" href="css et js/style.css">
 </head>
 
-<body>
-
-
+<header>
   <?php include "includes/header.php" ?>
+</header>
+
+<body>
 
   <?php
 
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\Exception;
+  $jeu='test-a';
 
-  require 'phpmailer/src/Exception.php';
-  require 'phpmailer/src/PHPMailer.php';
-  require 'phpmailer/src/SMTP.php';
+  echo '
+  <div class="col-4 d-flex justify-content-end pe-3">
+  <button type="button" class="btn-close btn-danger btn-sm" aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$jeu.'"></button>
+  </div>
 
-  $mail = new PHPMailer(true);
-  $vCle = '1234';
-
-  try {
-      //Server settings
-      $mail->SMTPDebug = 0;                                       //Enable verbose debug output
-      $mail->isSMTP();                                            //Send using SMTP
-      $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-      $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-      $mail->Username   = 'Logic.Gaming.Projet@gmail.com';        //SMTP username
-      $mail->Password   = 'PSQS2022';                             //SMTP password
-      $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-      $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-      //Recipients
-      $mail->setFrom('ne-pas-repondre@Logic-Gaming.fr', 'Finalisation inscription');
-      //$mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
-      $mail->addAddress('szhang0709@gmail.com');               //Name is optional
-      //$mail->addReplyTo('info@example.com', 'Information');
-      //$mail->addCC('cc@example.com');
-      //$mail->addBCC('bcc@example.com');
-
-      //Attachments
-      //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-      //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-      //Content
-      $mail->isHTML(true);                                  //Set email format to HTML
-      $mail->Subject = 'Verification compte Logic-Gaming';
-      $mail->Body    = '<h2>Vous avez créée un compte sur Logic-Gaming</h2>
-                        <br>
-                        <p>Veuillez finaliser la création de votre compte en cliquant <a href="http://localhost/Projet%20annuel/inscription.php?message='.$vCle.'">ici</a><p>';
-      //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-      $mail->send();
-  } catch (Exception $e) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-  }
+  <div class="modal fade popup" id="suppression'.$jeu.'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="suppressionLabel">Suppression</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Etes-vous sûr de supprimer ce jeu de la base de donnée? Cet action est irréversible !
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <a type="button" class="btn btn-danger" href="verification_jeu.php?delete='.$jeu.'">Supprimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  ';
 
   ?>
 
