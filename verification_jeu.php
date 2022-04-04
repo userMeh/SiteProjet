@@ -8,6 +8,12 @@ if(isset($_GET['delete'])){
 
   $bdd->query('DELETE FROM GENRE_JEUX WHERE nom_jeux="'.$jeu.'"');   //Pour supprimer les donnees de la table GENRE_JEUX
   $bdd->query('DELETE FROM JEUX WHERE nom="'.$jeu.'"');              //sinon on peut pas a cause de la cle etrangere
+
+  unlink('imageJeux/'.$jeu.'0.jpg');
+  unlink('imageJeux/'.$jeu.'1.jpg');
+  unlink('imageJeux/'.$jeu.'2.jpg');
+  unlink('imageJeux/'.$jeu.'3.jpg');
+
   $message="succès suppression jeu";
   header('location:liste_jeux.php?message='.$message);
   exit;

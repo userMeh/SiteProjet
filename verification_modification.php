@@ -6,6 +6,11 @@ if(isset($_GET['modify'])){
 
   $pseudo = $_GET['modify'];
 
+  //Pour les logs
+  $query = $bdd->query('SELECT type FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
+  $type = $query -> fetchAll(PDO::FETCH_COLUMN);
+  //
+
   {
     if (strlen($_POST['pseudo']) >= 3 && strlen($_POST['pseudo']) <= 14) {
       if ($pseudo!=$_POST['pseudo']) {
@@ -33,6 +38,24 @@ if(isset($_GET['modify'])){
         'type'=>$_POST['type'],
         'pseudo'=>$pseudo
       ]);
+
+      if(!file_exists("logs/modification")){
+        mkdir("logs/modification", 0777);
+      }
+
+      $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
+      $email = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+      $nouvPseudo = $_POST['pseudo'];
+      $nouvType = $_POST['type'];
+
+      $logs = fopen("logs/modification/$email[0].txt", "a+");
+      date_default_timezone_set('Europe/Paris');
+      $date = date('d/m/Y à H:i:s');
+      $txt = "$email[0] a été modifié le $date, son pseudo a été changé de $pseudo à $nouvPseudo et ses droits sont passées de $type[0] à $nouvType\n";
+      fwrite($logs, $txt);
+      fclose($logs);
+
       $message="succès modification";
       header('location:liste_utilisateurs.php?message='.$message);
       exit;
@@ -43,10 +66,26 @@ if(isset($_GET['modify'])){
     }
   }
 } else if(isset($_GET['delete'])) {
+
+  if(!file_exists("logs/modification")){
+    mkdir("logs/modification", 0777);
+  }
+
+  $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'"');
+  $email = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+  $logs = fopen("logs/modification/+.suppression.txt", "a+");
+  date_default_timezone_set('Europe/Paris');
+  $date = date('d/m/Y à H:i:s');
+  $txt = "$email[0] a été supprimé le $date\n";
+  fwrite($logs, $txt);
+  fclose($logs);
+
   $delete = $bdd->prepare('DELETE FROM UTILISATEURS WHERE pseudo=:pseudo');
   $delete -> execute([
     'pseudo'=>$_GET['delete']
   ]);
+
   $message="succès suppression utilisateur";
   header('location:liste_utilisateurs.php?message='.$message);
   exit;

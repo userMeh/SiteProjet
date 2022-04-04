@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="overflow-y:hidden;>
+<html style="overflow-y:hidden">
   <head>
     <meta charset="utf-8">
     <?php include "includes/bootstrap.php" ?>

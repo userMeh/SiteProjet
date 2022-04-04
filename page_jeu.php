@@ -30,7 +30,26 @@
 <body>
 
   <main>
+
     <?php include "includes/header.php" ?>
+
+    <?php
+    if(isset($_SESSION['compte'])){
+
+      $compte = $_SESSION['compte'];
+
+      if(!file_exists("logs/visite_jeu")){
+        mkdir("logs/visite_jeu", 0777);
+      }
+
+      $logs = fopen("logs/visite_jeu/$compte.txt", "a+");
+      date_default_timezone_set('Europe/Paris');
+      $date = date('d/m/Y à H:i:s');
+      $txt = "$compte a visité la page $jeu le $date\n";
+      fwrite($logs, $txt);
+      fclose($logs);
+    }
+    ?>
 
     <div class="containerhelp">
       <h1> <?php echo $jeu ?> </h1>

@@ -22,8 +22,23 @@
     $message="identifiants incorrect";
     header('location:connexion.php?message='.$message.'');
   } else {
+    $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
+    $email = $query -> fetchAll(PDO::FETCH_COLUMN);
+
     session_start();
-    $_SESSION['pseudo']=$_POST['pseudo'];
+
+    if(!file_exists("logs/connexion")){
+      mkdir("logs/connexion", 0777);
+    }
+
+    $logs = fopen("logs/connexion/$email[0].txt", "a+");
+    date_default_timezone_set('Europe/Paris');
+    $date = date('d/m/Y à H:i:s');
+    $txt = "$email[0] s'est connecté le $date\n";
+    fwrite($logs, $txt);
+    fclose($logs);
+
+    $_SESSION['compte']=$email[0];
     header('location:index.php');
   }
 
