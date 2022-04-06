@@ -47,6 +47,8 @@ if(isset($_GET['delete'])){
 
         if ($jour <=31 && $mois <= 12 && $annee <= date('Y')) {
           $date_sortie = $jour .'/'. $mois .'/'. $annee;
+          $date_bdd = date('Y-m-d', strtotime($date_sortie));
+          echo $date_bdd;
         } else {
           $message="Les informations de la date de sortie sont invalides";
           header('location:ajout_jeu.php?message='.$message);
@@ -94,7 +96,7 @@ if(isset($_GET['delete'])){
       $result=$request->execute([
         'nom' => $_POST['nom'],
         'synopsis' => $_POST['synopsis'],
-        'date_sortie' => $_POST['date_sortie'],
+        'date_sortie' => $date_bdd,
         'developpeur' => $_POST['developpeur'],
         'note' => 0,
         'nb_note' => 0,

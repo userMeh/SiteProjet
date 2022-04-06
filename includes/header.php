@@ -16,7 +16,7 @@ include "includes/bdd.php";
       </form>
       <div class="col-md-1"></div>
       <div class="row">
-        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['pseudo'])){
+        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['compte'])){
           echo 'href="profil.php">Profil</a>';
         } else {
           echo 'href="connexion.php">Connexion</a>';

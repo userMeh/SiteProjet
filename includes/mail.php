@@ -23,7 +23,7 @@ try {
     //Recipients
     $mail->setFrom('ne-pas-repondre@Logic-Gaming.fr', 'Finalisation inscription');
     //$mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
-    $mail->addAddress('szhang0709@gmail.com');               //Name is optional
+    $mail->addAddress($_POST['email']);               //Name is optional
     //$mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('cc@example.com');
     //$mail->addBCC('bcc@example.com');
@@ -36,7 +36,7 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Verification compte Logic-Gaming';
     $mail->Body    = '<h2>Vous avez créé un compte sur Logic-Gaming</h2>
-                      <p>Veuillez finaliser la création de votre compte en cliquant <a href="http://164.132.229.139/inscription.php?cle='.$vCle.'">ici</a><p>
+                      <p>Veuillez finaliser la création de votre compte en cliquant <a href="http://164.132.229.139/verification_inscription.php?cle='.$vCle.'">ici</a><p>
                       <p>Pour le local <a href="http://localhost/Projet%20annuel/verification_inscription.php?cle='.$vCle.'">ici</a>';
     //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

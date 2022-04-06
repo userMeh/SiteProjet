@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="utf-8">
 
@@ -134,9 +134,12 @@
         Date de sortie:
         <?php
         $query = $bdd -> query('SELECT date_sortie FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->date_sortie;
-        }
+        $date = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+        $liste = 0;
+        include "includes/date.php";
+
+        echo ''.$jour.' '.$mois.' '.$annee.'';
         ?>
         <br>
         Développeur:

@@ -1,8 +1,8 @@
-<html>
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <?php include "includes/bootstrap.php" ?>
-    <title>Liste d'utilisateurs</title>
+    <title>Liste des jeux</title>
   </head>
   <body>
     <?php include "includes/header.php" ?>
@@ -16,6 +16,7 @@
         <?php include "includes/messageErreur.php" ?>
 
         <?php
+
         $query = $bdd -> query('SELECT nom FROM JEUX');
         $jeu = $query -> fetchAll(PDO::FETCH_COLUMN);
         $count_jeu = count($jeu);
@@ -30,6 +31,9 @@
         $vues = $query -> fetchAll(PDO::FETCH_COLUMN);
 
         for ($i=0; $i < $count_jeu; $i++) {
+
+          $liste = 1;
+          include "includes/date.php";
 
           $query = $bdd -> prepare('SELECT SUBSTRING(synopsis,1,450) FROM JEUX WHERE nom=:nom');
           $req = $query -> execute([
@@ -74,7 +78,7 @@
                 </div>
               </div>
 
-                <p>Developpé par '.$developpeur[$i].'   |   Publié le '.$date[$i].'   |   <img src="images/views-light.png" style="width: 20px;"> '.$vues[$i].' vues</p>
+                <p>Developpé par '.$developpeur[$i].'   |   Publié le '.$jour.' '.$mois.' '.$annee.'   |   <img src="images/views-light.png" style="width: 20px;"> '.$vues[$i].' vues</p>
                 <p>'.$extrait[0].'...</p>
 
               </div>

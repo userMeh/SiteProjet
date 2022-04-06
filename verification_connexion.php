@@ -21,7 +21,17 @@
   if(count($result)==0) {
     $message="identifiants incorrect";
     header('location:connexion.php?message='.$message.'');
+    exit;
   } else {
+
+    $query = $bdd-> query('SELECT verifie FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
+    $verifie = $query -> fetchAll(PDO::FETCH_COLUMN);
+    if ($verifie[0]!='oui'){
+      $message="Votre email n'est pas validé";
+      header('location:connexion.php?message='.$message.'');
+      exit;
+    }
+
     $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
     $email = $query -> fetchAll(PDO::FETCH_COLUMN);
 
@@ -40,6 +50,7 @@
 
     $_SESSION['compte']=$email[0];
     header('location:index.php');
+    exit;
   }
 
 ?>
