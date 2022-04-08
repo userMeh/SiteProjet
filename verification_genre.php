@@ -1,6 +1,6 @@
 <?php
 
-  include ('includes/bdd.php');
+  include "includes/bdd.php";
 
   $doublon=$bdd->prepare('SELECT nom FROM GENRE WHERE nom=?');
   $doublon->execute([

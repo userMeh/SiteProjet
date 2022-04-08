@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <?php include "includes/bootstrap.php" ?>
+    <?php include "includes/head.php" ?>
     <title>Ajout genre</title>
   </head>
   <body>

@@ -1,7 +1,7 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8">
-    <?php include "includes/bootstrap.php" ?>
+    <?php include "includes/head.php" ?>
     <title>Liste des jeux</title>
   </head>
   <body>

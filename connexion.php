@@ -2,7 +2,7 @@
 <html style="overflow-y:hidden">
   <head>
     <meta charset="utf-8">
-    <?php include "includes/bootstrap.php" ?>
+    <?php include "includes/head.php" ?>
     <title>Inscription</title>
   </head>
   <body>

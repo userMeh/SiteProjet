@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <?php
-    include "includes/bootstrap.php";
-    include "includes/bdd.php";
+    include "includes/head.php";
 
     if (isset($_GET['genre'])) {          //Pour verifier si le genre existe et eviter les injections sql
       $genre=$_GET['genre'];

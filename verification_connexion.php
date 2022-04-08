@@ -1,6 +1,6 @@
 <?php
 
-  include ('includes/bdd.php');
+  include "includes/bdd.php";
 
   if (!empty($_POST['pseudo']) && isset($_POST['pseudo']) && !empty($_POST['mdp'])) {
 

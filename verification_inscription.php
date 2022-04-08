@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/bdd.php');
+include "includes/bdd.php";
 
 if(isset($_GET['cle'])){
   $cle = $_GET['cle'];

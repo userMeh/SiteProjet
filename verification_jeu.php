@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/bdd.php');
+include "includes/bdd.php";
 
 if(isset($_GET['delete'])){
 
@@ -46,7 +46,7 @@ if(isset($_GET['delete'])){
         $annee = next($array);
 
         if ($jour <=31 && $mois <= 12 && $annee <= date('Y')) {
-          $date_sortie = $jour .'/'. $mois .'/'. $annee;
+          $date_sortie = $annee .'-'. $mois .'-'. $jour;
           $date_bdd = date('Y-m-d', strtotime($date_sortie));
           echo $date_bdd;
         } else {

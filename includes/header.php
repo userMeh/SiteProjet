@@ -1,7 +1,3 @@
-<?php
-session_start();
-include "includes/bdd.php";
-?>
 <div class="container-fluid intro">
   <div class="row">
     <div class="col-4 col-md-1"></div>
