@@ -40,7 +40,7 @@
 
       $id = $incr[0]+1;
     }
-    $query = $bdd -> query('SELECT nom FROM FAVORI WHERE id = "'.$id[0].'"');
+    $query = $bdd -> query('SELECT nom FROM FAVORI WHERE id='.$id[0].' AND nom="'.$jeu.'"');
     $favorite = $query -> fetchAll(PDO::FETCH_COLUMN);
   }
   ?>

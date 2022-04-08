@@ -38,9 +38,9 @@ if (isset($_GET['fav'])) {
   $jeu = current($get);
   $id = next($get);
 
-  $query = $bdd -> query('DELETE FROM FAVORI WHERE id="'.$id.' AND nom='.$jeu.'"');
+  $query = $bdd -> query('DELETE FROM FAVORI WHERE id='.$id.' AND nom="'.$jeu.'"');
 
-  $query = $bdd -> query('SELECT email FROM BIBLIOTHEQUE WHERE id="'.$id.'"');
+  $query = $bdd -> query('SELECT email FROM BIBLIOTHEQUE WHERE id='.$id.'');
   $email = $query -> fetchAll(PDO::FETCH_COLUMN);
 
   if(!file_exists("logs/favoris")){

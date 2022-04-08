@@ -36,7 +36,7 @@
           }
 
           echo
-          '<div class="card bg-dark" style="width: 33%;">
+          '<div class="card bg-dark mx-2" style="width: 32%;">
             <a href="page_jeu.php?jeu='.$jeu[$i].'"><img src="imageJeux/'.$jeu[$i].'0.jpg" class="card-img-top"></a>
             <div class="card-body">
               <h3 class="card-title d-flex justify-content-center"><b>'.$jeu[$i].'</b></h3>
@@ -45,7 +45,7 @@
 
           if ($count_jeu%4 == 0 AND $i != 0) {
             echo '</div>';
-            echo '<div class="row">';
+            echo '<div class="row mt-2">';
           }
           echo
           '';
