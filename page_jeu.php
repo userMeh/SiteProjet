@@ -96,7 +96,7 @@
             if (!$favorite) {
               echo '<a href="verification_favori.php?fav='.$jeu.'/'.$id[0].'"><button class="btn btn-info" type="button" name="button">Ajouter aux favoris</button></a>';
             } else {
-              echo '<a href="verification_favori.php?defav='.$jeu.'/'.$id[0].'"><button class="btn btn-danger" type="button" name="button">Retirer des favoris</button>';
+              echo '<a href="verification_favori.php?defav='.$jeu.'/'.$id[0].'"><button class="btn btn-danger" type="button" name="button">Retirer des favoris</button></a>';
             }
           }
           ?>
@@ -235,6 +235,8 @@
       </p>
     </div>
   </main>
+
+  <?php include "includes/footer.php" ?>
 
   <!--script js-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -77,7 +77,7 @@
               <a class="nav-link" href="liste_jeux.php">Liste de jeux</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Votre bibliothèque</a>
+              <a class="nav-link" href="bibliotheque.php">Votre bibliothèque</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="liste_utilisateurs.php">Liste utilisateurs</a>
