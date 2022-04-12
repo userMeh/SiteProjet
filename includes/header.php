@@ -85,6 +85,27 @@
             <li class="nav-item">
               <a class="nav-link" href="test.php">TEST</a>
             </li>
+            <li class="nav-item">
+            <buttom  onclick="lightMode()"><img src="images/sun.png" class="moon "></buttom>
+
+            </li>
+            <li>
+              <buttom  onclick="darkMode()"><img src="images/moon.png" class="moon"></buttom>
+            </li>
+            <script>
+            function darkMode() {
+              var element = document.body;
+              var content = document.getElementById("DarkModetext");
+              element.className = "dark-mode";
+              content.innerText = "Dark Mode is ON";
+            }
+            function lightMode() {
+              var element = document.body;
+              var content = document.getElementById("DarkModetext");
+              element.className = "light-mode";
+              content.innerText = "Dark Mode is OFF";
+            }
+            </script>
           </ul>
         </div>
       </div>
