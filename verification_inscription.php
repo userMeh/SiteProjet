@@ -53,6 +53,11 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
       header('location:inscription.php?message='.$message);
       exit;
 
+    }if (!isset($_POST['verifCaptcha'])) {
+      $message = "Veuillez confirmer que vous êtes de la race Homo Sapiens";
+      header('location:inscription.php?message='.$message);
+      exit;
+
     } else {
       if (strlen($_POST['mdp']) >= 8 && strlen($_POST['mdp']) <= 20){
         $doublon=$bdd->prepare('SELECT pseudo FROM UTILISATEURS WHERE email=?');

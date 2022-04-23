@@ -1,0 +1,116 @@
+@font-face {
+  font-family:"poppins-normal";
+  src: url("../fonts/Poppins-Regular.woff2");
+}
+@font-face {
+  font-family:"poppins-bold";
+  src: url("../fonts/Poppins-Bold.woff2");
+}
+@font-face {
+  font-family:"poppins-italic";
+  src: url("../fonts/Poppins-Italic.woff2");
+}
+
+html{
+  font-family: "poppins-normal" !important;
+  overflow-x: hidden;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(to bottom, #0632d1, #000000);
+}
+
+footer{
+  background-color: black;
+  color: white;
+  margin: 0;
+}
+
+#tendance{
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.carousel-item img{
+  width: 100%;
+  height: auto;
+}
+
+.container{
+  padding: 20px;
+  background: black;
+  color: white;
+}
+
+.centreur{
+  text-align: center;
+}
+
+.categorie{
+  background: lightgrey;
+  color: black;
+}
+
+.intro{
+  padding-top: 50px;
+  padding-bottom: 30px;
+  background: #212529;
+}
+
+.intro .col-4 img{
+  padding-bottom: 20px;
+  justify-content: center;
+}
+
+.logo .col-md-1{
+  width: 100% !important;
+}
+
+.images{
+  width: 75%;
+  text-align: center;
+}
+
+.popup{
+  color: black;
+}
+
+.card a{
+  text-decoration: none;
+  color: white;
+}
+
+a img{
+  transition: 0.5s;
+}
+
+a img:hover{
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+dark-mode .container {
+  background: black;
+  color: white;
+}
+.light-mode .container {
+  background-color: lightgrey;
+  color: black;
+}
+.dark-mode .categorie {
+  background: lightgrey;
+  color: black;
+}
+.light-mode .categorie {
+  background-color: black;
+  color: white;
+}
+
+.moon{
+  max-width: 50px;
+  max-height: 50px;
+  cursor: pointer;
+}

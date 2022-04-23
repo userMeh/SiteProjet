@@ -27,15 +27,20 @@ if(isset($_GET['modify'])){
           exit;
         }
 
-      $changePseudo = $bdd->prepare('UPDATE UTILISATEURS SET pseudo=:pseudo WHERE pseudo=:ancienPseudo');
-      $changePseudo -> execute([
-        'ancienPseudo'=>$pseudo,
-        'pseudo'=>$_POST['pseudo']
-      ]);
-    }
+        $changePseudo = $bdd->prepare('UPDATE UTILISATEURS SET pseudo=:pseudo WHERE pseudo=:ancienPseudo');
+        $changePseudo -> execute([
+          'ancienPseudo'=>$pseudo,
+          'pseudo'=>$_POST['pseudo']
+        ]);
+      }
+
+      if ($_POST['type'] == "admin") {
+        $bddType = 1;
+      }
+
       $changeType = $bdd->prepare('UPDATE UTILISATEURS SET type=:type WHERE pseudo=:pseudo');
       $changeType -> execute([
-        'type'=>$_POST['type'],
+        'type'=>$bddType,
         'pseudo'=>$pseudo
       ]);
 
@@ -52,7 +57,14 @@ if(isset($_GET['modify'])){
       $logs = fopen("logs/modification/$email[0].txt", "a+");
       date_default_timezone_set('Europe/Paris');
       $date = date('d/m/Y à H:i:s');
-      $txt = "$email[0] a été modifié le $date, son pseudo a été changé de $pseudo à $nouvPseudo et ses droits sont passées de $type[0] à $nouvType\n";
+
+      if ($type[0] == 1) {
+        $logType = "admin";
+      } else {
+        $logType = "utilisateur";
+      }
+
+      $txt = "$email[0] a été modifié le $date, son pseudo a été changé de $pseudo à $nouvPseudo et ses droits sont passées de $logType à $nouvType\n";
       fwrite($logs, $txt);
       fclose($logs);
 
@@ -89,6 +101,58 @@ if(isset($_GET['modify'])){
   $message="succès suppression utilisateur";
   header('location:liste_utilisateurs.php?message='.$message);
   exit;
+
+} else if(isset($_GET['ban'])) {
+
+  $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['ban'].'"');
+  $email = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+  $query = $bdd -> query('SELECT type FROM UTILISATEURS WHERE pseudo="'.$_GET['ban'].'"');
+  $isBan = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+  if ($isBan[0] == 2) {
+    $logs = fopen("logs/modification/$email[0].txt", "a+");
+    date_default_timezone_set('Europe/Paris');
+    $date = date('d/m/Y à H:i:s');
+
+    $txt = "$email[0] a été débanni le $date\n";
+    fwrite($logs, $txt);
+    fclose($logs);
+
+    $ban = $bdd->prepare('UPDATE UTILISATEURS SET type=:type WHERE pseudo=:pseudo');
+    $ban -> execute([
+      'type' => 0,
+      'pseudo'=>$_GET['ban']
+    ]);
+
+    $message="succès modification";
+    header('location:liste_utilisateurs.php?message='.$message);
+    exit;
+
+  } else {
+    if(!file_exists("logs/modification")){
+      mkdir("logs/modification", 0777);
+    }
+
+    $logs = fopen("logs/modification/$email[0].txt", "a+");
+    date_default_timezone_set('Europe/Paris');
+    $date = date('d/m/Y à H:i:s');
+
+    $txt = "$email[0] a été banni le $date\n";
+    fwrite($logs, $txt);
+    fclose($logs);
+
+    $ban = $bdd->prepare('UPDATE UTILISATEURS SET type=:type WHERE pseudo=:pseudo');
+    $ban -> execute([
+      'type' => 2,
+      'pseudo'=>$_GET['ban']
+    ]);
+
+    $message="succès modification";
+    header('location:liste_utilisateurs.php?message='.$message);
+    exit;
+  }
+
 } else {
   header('location:liste_utilisateurs.php');
   exit;

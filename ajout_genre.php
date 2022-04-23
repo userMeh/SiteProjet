@@ -2,6 +2,7 @@
   <head>
     <meta charset="utf-8">
     <?php include "includes/head.php" ?>
+    <?php include "includes/admin.php" ?>
     <title>Ajout genre</title>
   </head>
   <body>

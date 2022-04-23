@@ -35,22 +35,31 @@
     $query = $bdd->query('SELECT email FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
     $email = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-    session_start();
+    $query = $bdd->query('SELECT type FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
+    $type = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-    if(!file_exists("logs/connexion")){
-      mkdir("logs/connexion", 0777);
+    if ($type[0] == 2) {
+      $message = "Votre compte a été suspendu";
+      header('location:connexion.php?message='.$message.'');
+      exit;
+    } else {
+      session_start();
+
+      if(!file_exists("logs/connexion")){
+        mkdir("logs/connexion", 0777);
+      }
+
+      $logs = fopen("logs/connexion/$email[0].txt", "a+");
+      date_default_timezone_set('Europe/Paris');
+      $date = date('d/m/Y à H:i:s');
+      $txt = "$email[0] s'est connecté le $date\n";
+      fwrite($logs, $txt);
+      fclose($logs);
+
+      $_SESSION['compte']=$email[0];
+      header('location:index.php');
+      exit;
     }
-
-    $logs = fopen("logs/connexion/$email[0].txt", "a+");
-    date_default_timezone_set('Europe/Paris');
-    $date = date('d/m/Y à H:i:s');
-    $txt = "$email[0] s'est connecté le $date\n";
-    fwrite($logs, $txt);
-    fclose($logs);
-
-    $_SESSION['compte']=$email[0];
-    header('location:index.php');
-    exit;
   }
 
 ?>

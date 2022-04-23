@@ -30,6 +30,13 @@
         <h1 class="mb-3"><b>Votre bibliothèque</b></h1>
         <hr>
         <?php
+        if ($count_jeu == 0) {
+          echo
+          '<div class="my-5">
+            <h3 class="py-5"><p class="text-secondary text-center">Aucun jeu dans votre bibliothèque</p></h3>
+          </div>';
+        }
+
         for ($i=0; $i < $count_jeu; $i++) {
           if ($i==0) {
             echo '<div class="row mt-5">';

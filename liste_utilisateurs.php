@@ -2,6 +2,8 @@
   <head>
     <meta charset="utf-8">
     <?php include "includes/head.php" ?>
+    <?php include "includes/admin.php" ?>
+
     <title>Liste d'utilisateurs</title>
   </head>
   <body>
@@ -40,18 +42,36 @@
               </tr>
             </thead>
             <tbody>
-              <a href="#"></a>
               <?php
               for ($i=0; $i < $users; $i++) {
                 echo
                 '<tr>
                   <th scope="row">'.$pseudo[$i].'</th>
                   <td>'.$email[$i].'</td>
-                  <td>'.$type[$i].'</td>
+                  ';
+                  if ($type[$i] == 1) {
+                    echo
+                    '<td style="color:blue;">
+                    admin';
+                  } else if ($type[$i] == 2){
+                    echo
+                    '<td style="color:orange;">
+                    suspendu';
+                  } else {
+                    echo
+                    '<td>
+                    utilisateur';
+                  }
+                  echo '</td>
                   <td>'.$date_creation[$i].'</td>
                   <td>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition'.$pseudo[$i].'">Editer</button>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#suppression'.$pseudo[$i].'">Supprimer</button>
+                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#edition'.$pseudo[$i].'"><i class="bi-list" style="font-size: 1.2rem"></i></button>';
+                    if ($type[$i] == 2) {
+                      echo '<button class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#bannir'.$pseudo[$i].'"><i class="bi-unlock" style="font-size: 1.2rem"></i></button>';
+                    } else {
+                      echo '<button class="btn btn-warning btn-sm me-1" data-bs-toggle="modal" data-bs-target="#bannir'.$pseudo[$i].'"><i class="bi-lock" style="font-size: 1.2rem"></i></button>';
+                    }
+                    echo '<button class="btn btn-danger btn-sm me-1" data-bs-toggle="modal" data-bs-target="#suppression'.$pseudo[$i].'"><i class="bi-x-lg" style="font-size: 1.2rem"></i></button>
                   </td>
                 </tr>
 
@@ -63,11 +83,39 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        Etes-vous sûr de supprimer cet utilisateur de la base de donnée? Cet action est irréversible !
+                        Etes-vous sûr de supprimer cet utilisateur de la base de donnée ? Cet action est irréversible !
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <a type="button" class="btn btn-danger" href="verification_modification.php?delete='.$pseudo[$i].'">Supprimer</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal fade popup" id="bannir'.$pseudo[$i].'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="suppressionLabel">Bannissement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">';
+                        if ($type[$i] == 2) {
+                          echo 'Souhaitez vous débannir cet utilisateur ?';
+                        } else {
+                          echo 'Souhaitez vous bannir cet utilisateur ?';
+                        }
+                      echo '</div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <a type="button" class="btn btn-warning" href="verification_modification.php?ban='.$pseudo[$i].'">';
+                        if ($type[$i] == 2) {
+                          echo 'Débannir';
+                        } else {
+                          echo 'Bannir';
+                        }
+                        echo '</a>
                       </div>
                     </div>
                   </div>

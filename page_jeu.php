@@ -7,7 +7,13 @@
   include "includes/head.php";
 
   if (isset($_GET['jeu'])) {          //Pour verifier si le jeu existe
-    $jeu=$_GET['jeu'];
+
+    $array = explode('/', $_GET['jeu']);
+    $jeu = $array[0];
+    if (!empty($array[1])) {
+      $message = $array[1];
+    }
+
     $exist=$bdd->prepare('SELECT nom FROM JEUX WHERE nom=?');
     $exist->execute([
       $jeu
@@ -78,13 +84,14 @@
           <div class="col-12">
             <img class="images img-thumbnail" src='imageJeux/<?php
             $query = $bdd -> query('SELECT image FROM JEUX WHERE nom= "'. $jeu .'"');
-            while($req = $query -> fetch(PDO::FETCH_OBJ)){
-              echo $req->image;
-            }
+            $image = $query -> fetchAll(PDO::FETCH_COLUMN);
+              echo $image[0];
             ?>'>
           </div>
         </div>
       </div>
+
+      <?php include "includes/messageErreur.php" ?>
 
       <hr>
 
@@ -113,25 +120,22 @@
           <div class="carousel-item active">
             <img src="imageJeux/<?php
             $query = $bdd -> query('SELECT carousel1 FROM JEUX WHERE nom= "'. $jeu .'"');
-            while($req = $query -> fetch(PDO::FETCH_OBJ)){
-              echo $req->carousel1;
-            }
+            $carousel1 = $query -> fetchAll(PDO::FETCH_COLUMN);
+              echo $carousel1[0];
             ?>" class="d-block w-100">
           </div>
           <div class="carousel-item">
             <img src="imageJeux/<?php
             $query = $bdd -> query('SELECT carousel2 FROM JEUX WHERE nom= "'. $jeu .'"');
-            while($req = $query -> fetch(PDO::FETCH_OBJ)){
-              echo $req->carousel2;
-            }
+            $carousel2 = $query -> fetchAll(PDO::FETCH_COLUMN);
+              echo $carousel2[0];
             ?>" class="d-block w-100">
           </div>
           <div class="carousel-item">
             <img src="imageJeux/<?php
             $query = $bdd -> query('SELECT carousel3 FROM JEUX WHERE nom= "'. $jeu .'"');
-            while($req = $query -> fetch(PDO::FETCH_OBJ)){
-              echo $req->carousel3;
-            }
+            $carousel3 = $query -> fetchAll(PDO::FETCH_COLUMN);
+              echo $carousel3[0];
             ?>" class="d-block w-100">
           </div>
         </div>
@@ -146,19 +150,18 @@
       </div>
     </div>
     <div class="container">
-      <h1>Synopsis</h1>
+      <h1>Synopsis <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-synopsis">Editer</button></h1>
       <p>
 
         <?php
         $query = $bdd -> query('SELECT synopsis FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->synopsis;
-        }
+        $synopsis = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $synopsis[0];
         ?>
 
       </p>
       <hr>
-      <h2>A Propos du jeu </h2>
+      <h2>A Propos du jeu <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-aPropos">Editer</button></h2>
       <br>
       <p>
 
@@ -176,50 +179,45 @@
         <b>Développeur</b>:
         <?php
         $query = $bdd -> query('SELECT developpeur FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->developpeur;
-        }
+        $developpeur = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $developpeur[0];
         ?>
         <br><hr>
-        <h2>Configuration recommandée</h2><br>
+        <h2>Configuration recommandée <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-config">Editer</button></h2>
+        <br>
         <b>OS</b>:
         <?php
         $query = $bdd -> query('SELECT systeme FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->systeme;
-        }
+        $systeme = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $systeme[0];
         ?>
         <br>
         <b>Processor</b>:
         <?php
         $query = $bdd -> query('SELECT processeur FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->processeur;
-        }
+        $processeur = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $processeur[0];
         ?>
         <br>
         <b>Memory</b>:
         <?php
         $query = $bdd -> query('SELECT memoire FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->memoire;
-        }
+        $memoire = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $memoire[0];
         ?>
         <br>
         <b>Graphics</b>:
         <?php
         $query = $bdd -> query('SELECT graphique FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->graphique;
-        }
+        $graphique = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $graphique[0];
         ?>
         <br>
         <b>DirectX</b>:
         <?php
         $query = $bdd -> query('SELECT directX FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->directX;
-        }
+        $directX = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $directX[0];
         ?>
         <br><br><br>
 
@@ -227,14 +225,123 @@
         <a href="
         <?php
         $query = $bdd -> query('SELECT redirection FROM JEUX WHERE nom= "'. $jeu .'"');
-        while($req = $query -> fetch(PDO::FETCH_OBJ)){
-          echo $req->redirection;
-        }
+        $redirection = $query -> fetchAll(PDO::FETCH_COLUMN);
+          echo $redirection[0];
         ?>
         " class="btn btn-info">Cliquer ici</a>
       </p>
     </div>
   </main>
+
+
+  <!-- Modal edition synopsis -->
+  <div class="modal fade popup" id="edition-synopsis" tabindex="-1" aria-labelledby="editionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editionLabel">Edition du synopsis</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="verification_modification_jeu.php?modify1=<?php echo $jeu ?>" method="post" enctype="multipart/form-data">
+
+            <div class="form-group mb-3">
+              <label for="synopsis">synopsis</label>
+              <textarea name="synopsis" class="form-control" rows="10"><?php echo $synopsis[0] ?></textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal edition a propos du jeu -->
+  <div class="modal fade popup" id="edition-aPropos" tabindex="-1" aria-labelledby="editionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editionLabel">Edition à propos du jeu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="verification_modification_jeu.php?modify2=<?php echo $jeu ?>" method="post" enctype="multipart/form-data">
+
+            <div class="mb-3">
+              <label for="date_sortie" class="form-label"><h4>Date de sortie</h4></label>
+              <input type="text" name="date_sortie" class="form-control" value="<?php echo ''.strftime("%d", strtotime($date[0])).'/'.strftime("%m", strtotime($date[0])).'/'.strftime("%G", strtotime($date[0])).''; ?>" required>
+              <div class="form-text">Format: Jour/Mois/Année , JJ/MM/AA.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="developpeur" class="form-label"><h4>Développeur</h4></label>
+              <input type="text" name="developpeur" class="form-control" value="<?php echo $developpeur[0] ?>" required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal edition des configuration -->
+  <div class="modal fade popup" id="edition-config" tabindex="-1" aria-labelledby="editionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editionLabel">Edition des configurations recommandées</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="verification_modification_jeu.php?modify3=<?php echo $jeu ?>" method="post" enctype="multipart/form-data">
+
+            <div class="mb-3">
+              <label for="systeme" class="form-label"><h4>Système d'exploitation</h4></label>
+              <input type="text" name="systeme" class="form-control" value="<?php echo $systeme[0] ?>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="processeur" class="form-label"><h4>Processeur</h4></label>
+              <input type="text" name="processeur" class="form-control" value="<?php echo $processeur[0] ?>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="memoire" class="form-label"><h4>Mémoire</h4></label>
+              <input type="text" name="memoire" class="form-control" value="<?php echo $memoire[0] ?>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="graphique" class="form-label"><h4>Carte graphique</h4></label>
+              <input type="text" name="graphique" class="form-control" value="<?php echo $graphique[0] ?>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="directX" class="form-label"><h4>DirectX</h4></label>
+              <input type="text" name="directX" class="form-control" value="<?php echo $directX[0] ?>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="redirection" class="form-label"><h4>Redirection</h4></label>
+              <input type="text" name="redirection" class="form-control" value="<?php echo $redirection[0] ?>" required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <?php include "includes/footer.php" ?>
 
