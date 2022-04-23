@@ -21,8 +21,8 @@
 
     <div class="col-12 col-md-9">
       <form class="d-flex" method="GET" action="liste_jeux.php">
-        <input class="form-control form-control-lg me-3" name="search" type="search" placeholder="Dan est un refugié politique de Croatie et est pourchassé par Xi Xinping" aria-label="Search">
-        <button class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
+        <input class="form-control form-control-lg me-3" name="search" type="search" placeholder="Recherche" aria-label="Search">
+        <button id="searchbar" class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
       </form>
       <div class="col-md-1"></div>
       <div class="row">
@@ -34,7 +34,6 @@
         ?>
         <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="inscription.php">Inscription</a>
         <?php
-        echo $admin;
         if ($admin == 1) {
           echo '<a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="ajout_jeu.php">Ajouter un jeu</a>';
         }
@@ -43,7 +42,7 @@
     </div>
   </div>
 </div>
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -98,15 +97,11 @@
             <li class="nav-item">
               <a class="nav-link" href="test.php">TEST</a>
             </li>
-            <li class="nav-item">
-            <buttom  onclick="lightMode()"><img src="images/sun.png" class="moon "></buttom>
-
-            </li>
-            <li>
-              <buttom  onclick="darkMode()"><img src="images/moon.png" class="moon"></buttom>
-            </li>
-            <script src="css-js/script.js"></script>
           </ul>
+          <span>
+            <a id="lightDark" type="button" class="btn btn-light" onclick="switchMode()"><i id="lightDark-icon" class="bi-sun light"></i></a>
+          </span>
         </div>
       </div>
+      <script src="css-js/script.js?<?php echo time(); ?>"></script>
     </nav>

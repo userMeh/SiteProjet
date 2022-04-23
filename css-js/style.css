@@ -43,6 +43,7 @@ footer{
   padding: 20px;
   background: black;
   color: white;
+  transition: 0.5s;
 }
 
 .centreur{
@@ -92,25 +93,37 @@ a img:hover{
   transition: 0.5s;
 }
 
-dark-mode .container {
+/* light and dark */
+
+.dark-mode .container {
   background: black;
   color: white;
+  transition: 0.5s;
 }
 .light-mode .container {
   background-color: lightgrey;
   color: black;
+  transition: 0.5s;
 }
 .dark-mode .categorie {
   background: lightgrey;
   color: black;
+  transition: 0.5s;
 }
 .light-mode .categorie {
   background-color: black;
   color: white;
+  transition: 0.5s;
 }
-
-.moon{
-  max-width: 50px;
-  max-height: 50px;
-  cursor: pointer;
+.dark-mode .intro{
+  padding-top: 50px;
+  padding-bottom: 30px;
+  background: #212529;
+  transition: 0.5s;
+}
+.light-mode .intro{
+  padding-top: 50px;
+  padding-bottom: 30px;
+  background: #f8f9fa;
+  transition: 0.5s;
 }

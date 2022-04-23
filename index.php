@@ -5,10 +5,10 @@
   <?php include "includes/head.php" ?>
   <title>Accueil</title>
 </head>
+
 <body>
   <!-- Barre de navigation -->
   <?php include "includes/header.php" ?>
-    <!-- Fin Barre de navigation -->
 
     <!-- Jeux defilant -->
     <main>
@@ -97,7 +97,7 @@
               <h5>Jeux populaires</h5>         <!-- jeux populaires-->
             </div>
             <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-dark" type="submit">Voir plus</button>
+              <a class="btn btn-outline-dark" type="submit">Voir plus</a>
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@
               <h5>Récemment visité</h5>         <!-- jeux recemment visite-->
             </div>
             <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-dark" type="submit">Voir plus</button>
+              <a class="btn btn-outline-dark" type="submit">Voir plus</a>
             </div>
           </div>
         </div>
