@@ -1,6 +1,6 @@
 var state = "light"; // le state du button pas de la page
 
-let receive = localStorage.getItem("mode");
+receive = localStorage.getItem("mode");
 if (receive == "light") {
   state = "light";
   var launch = "instant"
@@ -87,7 +87,6 @@ function switchMode() {
       document.getElementById("navbar").style.transition = "none";
     }
 
-
     //Change les boutons
     let button = document.getElementsByClassName("btn-outline-dark");
 
@@ -98,10 +97,59 @@ function switchMode() {
     document.getElementById("searchbar").classList.remove("btn-outline-light");
     document.getElementById("searchbar").classList.add("btn-outline-dark");
 
-    //Transfer
+    //Transfert
     let mode = "light"
     localStorage.setItem("mode", mode);
 
     state = "dark"
   }
+}
+
+//-----------------------NOTE---------------------------------------------------
+
+stars = document.querySelectorAll(".bi-star-fill");
+
+init();
+
+function init() {
+  stars.forEach(stars => {
+    stars.addEventListener("click", saveRating);
+    stars.addEventListener("mouseover", selected);
+    stars.addEventListener("mouseleave", unselected);
+  });
+}
+
+function saveRating(e) {
+  removeEventListenerToAllStars();
+  console.log(e.target.dataset.value);
+}
+function removeEventListenerToAllStars() {
+  stars.forEach(star => {
+    star.removeEventListener("click", saveRating);
+    star.removeEventListener("mouseover", selected);
+    star.removeEventListener("mouseleave", unselected);
+  });
+
+}
+function selected(e, css = "hover-star") {
+  const hoveredStar = e.target;
+  hoveredStar.classList.add(css);
+  const previousSiblings = getPreviousSiblings(hoveredStar);
+  previousSiblings.forEach((elem) => elem.classList.add(css));
+}
+function unselected(e, css = "hover-star") {
+  const hoveredStar = e.target;
+  hoveredStar.classList.remove(css);
+  const previousSiblings = getPreviousSiblings(hoveredStar);
+  previousSiblings.forEach((elem) => elem.classList.remove(css));
+}
+function getPreviousSiblings(elem) {
+  let siblings = [];
+  const spanNodeType = 1;
+  while (elem = elem.previousSibling) {
+    if (elem.nodeType === spanNodeType) {
+      siblings = [elem, ...siblings];
+    }
+  }
+  return siblings;
 }

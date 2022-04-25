@@ -9,8 +9,6 @@ if(isset($_GET['modify'])){
   //Pour les logs
   $query = $bdd->query('SELECT type FROM UTILISATEURS WHERE pseudo="'.$_POST['pseudo'].'"');
   $type = $query -> fetchAll(PDO::FETCH_COLUMN);
-  //
-
   {
     if (strlen($_POST['pseudo']) >= 3 && strlen($_POST['pseudo']) <= 14) {
       if ($pseudo!=$_POST['pseudo']) {
@@ -36,12 +34,14 @@ if(isset($_GET['modify'])){
 
       if ($_POST['type'] == "admin") {
         $bddType = 1;
+      } else {
+        $bddType = 0;
       }
 
       $changeType = $bdd->prepare('UPDATE UTILISATEURS SET type=:type WHERE pseudo=:pseudo');
-      $changeType -> execute([
+      $check = $changeType -> execute([
         'type'=>$bddType,
-        'pseudo'=>$pseudo
+        'pseudo'=>$_POST['pseudo']
       ]);
 
       if(!file_exists("logs/modification")){

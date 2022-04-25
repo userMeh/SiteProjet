@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -85,6 +85,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="bibliotheque.php">Votre bibliothèque</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="ajout_tournoi.php">Tournoi</a>
             </li>
             <?php
             if ($admin == 1) {

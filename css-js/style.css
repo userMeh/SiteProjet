@@ -93,6 +93,10 @@ a img:hover{
   transition: 0.5s;
 }
 
+.hover-star{
+  color: yellow;
+}
+
 /* light and dark */
 
 .dark-mode .container {

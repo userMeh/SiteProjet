@@ -81,33 +81,75 @@
       <div class="centreur mb-5">
         <h1><b> <?php echo $jeu ?> </b></h1>
         <div class="row mt-5">
-          <div class="col-12">
+          <div class="col-8" style="border-right:solid #3f3f3f;">
             <img class="images img-thumbnail" src='imageJeux/<?php
             $query = $bdd -> query('SELECT image FROM JEUX WHERE nom= "'. $jeu .'"');
             $image = $query -> fetchAll(PDO::FETCH_COLUMN);
               echo $image[0];
             ?>'>
           </div>
+          <div class="col-4">
+            <div class="row">
+              <span>
+                <i class="bi-star-fill note me-2" data-value="1" style="font-size: 2.5rem;"></i>
+                <i class="bi-star-fill note me-2" data-value="2" style="font-size: 2.5rem;"></i>
+                <i class="bi-star-fill note me-2" data-value="3" style="font-size: 2.5rem;"></i>
+                <i class="bi-star-fill note me-2" data-value="4" style="font-size: 2.5rem;"></i>
+                <i class="bi-star-fill note me-2" data-value="5" style="font-size: 2.5rem;"></i>
+              </span>
+              <hr size="5">
+              <div>
+                <i class="bi-star-half" style="font-size: 4rem; color: yellow;"></i>
+                <p class="fs-2">4/5</p>
+              </div>
+              <hr size="5" style="margin:0;">
+            </div>
+            <div class="row">
+              <div class="col-6 pt-4">
+                <p class="fs-5">Nombre de vues</p>
+                <?php
+                $query = $bdd -> query('SELECT nb_vues FROM JEUX WHERE nom="'.$jeu.'"');
+                $vues = $query -> fetchAll(PDO::FETCH_COLUMN);
+                ?>
+                <p class="fs-4"><?php echo $vues[0].' <i class="bi-eye" style="font-size: 1.5rem;"></i>' ?></p>
+              </div>
+              <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
+                <p class="fs-5" style="margin:0;">Favori</p>
+                <?php
+                if (isset($_SESSION['compte'])){
+                  if (!$favorite) {
+                    echo '<a href="verification_favori.php?fav='.$jeu.'/'.$id[0].'"><i class="bi-bookmark-plus-fill" style="font-size: 3rem;"></i></a>';
+                  } else {
+                    echo '<a href="verification_favori.php?defav='.$jeu.'/'.$id[0].'"><i class="bi-bookmark-dash-fill" style="font-size: 3rem; color: red;"></i></a>';
+                  }
+                } else {
+                  echo '<a class="btn btn-primary mt-3" href="connexion.php">Se connecter</a>';
+                }
+                ?>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <?php include "includes/messageErreur.php" ?>
 
-      <hr>
+      <hr class="mb-3">
+      <div class="d-flex justify-content-center">
+        <?php
+        $query = $bdd -> query('SELECT nom_genre FROM GENRE_JEUX WHERE nom_jeux= "'. $jeu .'"');
+        $genre = $query -> fetchAll(PDO::FETCH_COLUMN);
+        $nbGenre = count($genre);
+        for ($i=0; $i < $nbGenre; $i++) {
+          echo '<a href="genre.php?genre='.$genre[$i].'" class="btn btn-secondary col-2 mx-1">'.$genre[$i].'</a>';
+        }
+        ?>
+      </div>
+
+      <hr class="mt-3">
 
       <div class="row mt-5">
-        <h2 class="col-10"><b>Images de <?php echo $jeu ?></b> :</h2>
-        <div class="col-2 d-flex justify-content-end">
-          <?php
-          if (isset($_SESSION['compte'])){
-            if (!$favorite) {
-              echo '<a href="verification_favori.php?fav='.$jeu.'/'.$id[0].'"><button class="btn btn-info" type="button" name="button">Ajouter aux favoris</button></a>';
-            } else {
-              echo '<a href="verification_favori.php?defav='.$jeu.'/'.$id[0].'"><button class="btn btn-danger" type="button" name="button">Retirer des favoris</button></a>';
-            }
-          }
-          ?>
-        </div>
+        <h2 class="col-12"><b>Images de <?php echo $jeu ?></b> :</h2>
       </div>
 
       <div id="tendance" class="carousel slide" data-bs-ride="carousel" data-interval="5000">
@@ -346,6 +388,7 @@
   <?php include "includes/footer.php" ?>
 
   <!--script js-->
+  <script src="css-js/script.js?<?php echo time(); ?>"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

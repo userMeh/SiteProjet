@@ -133,16 +133,24 @@
 
                           <div class="mb-3">
                             <label for="pseudo" class="form-label">Pseudo</label>
-                            <input type="text" name="pseudo" class="form-control" id="email" placeholder="" value="" required>
+                            <input type="text" name="pseudo" class="form-control" id="email" placeholder="" value="'.$pseudo[$i].'" required>
                             <div id="emailHelp" class="form-text">Entre 3 et 14 caractères.</div>
                           </div>
 
                           <div class="mb-3">
-                            <label for="email" class="form-label">Type</label>
-                            <select class="form-select" name="type" aria-label="Default select example">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-select" name="type" aria-label="Default select example"';
+                            if ($type[$i] == 2) {
+                              echo "disabled";
+                            }
+                            echo '>
                               <option value="utilisateur">Utilisateur</option>
                               <option value="admin">Admin</option>
-                            </select>
+                            </select>';
+                            if ($type[$i] == 2) {
+                              echo '<div id="typeHelp" class="form-text">'."L'utilisateur est banni.".'</div>';
+                            }
+                            echo '
                           </div>
 
                           <div class="modal-footer">

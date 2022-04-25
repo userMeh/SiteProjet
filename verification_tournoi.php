@@ -13,7 +13,7 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
   $message="Le tournoi est déjà ajouté ou le nom est déjà utilisé";
   header('location:ajout_tournoi.php?message='.$message);
   exit;
-
+} else {
   $array = explode('/', $_POST['date_de_depart']);
   if (count($array) != 3) {
     $message="La date de sortie n'est pas écrit dans le bon format";
@@ -24,7 +24,6 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
     $mois = next($array);
     $annee = next($array);
 
-
     if ($jour <=31 && $mois <= 12 && $annee >= date('Y')) {
       $date_de_depart = $jour .'/'. $mois .'/'. $annee;
     } else {
@@ -32,16 +31,15 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
       header('location:ajout_tournoi.php?message='.$message);
       exit;
     }
+
     if ($jour <=31 && $mois <= 12 && $annee >= date('Y')) {
       $duree = $jour .'/'. $mois .'/'. $annee;
     } else {
       $message="Les informations de la date de depart sont invalides";
       header('location:ajout_tournoi.php?message='.$message);
       exit;
-  }
-}
-
-else{
+    }
+    
     if(!file_exists($uploadsPath)){
       mkdir($uploadsPath,0777);
     }
@@ -67,7 +65,7 @@ else{
       'image' => $imagePrincipale,
       'duree' => $_POST['duree']
     ]);
-
+  }
 
   if($result){
     $message="succès tournoi creer";
@@ -79,5 +77,4 @@ else{
     exit;
   }
 }
-
 ?>

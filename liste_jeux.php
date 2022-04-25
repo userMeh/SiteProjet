@@ -68,11 +68,14 @@
 
             $altjeu = str_replace(" ","-","$jeu[$i]");   //On remplace les espaces par des . pcq sinon ca passe pas en id pour les modals/popup
 
-            echo'
-            <div class="col-1 d-flex justify-content-end pe-3">
-            <button type="button" class="btn-close btn-danger btn-sm" aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$altjeu.'"></button>
-            </div>
+            if ($admin == 1) {
+              echo'
+              <div class="col-1 d-flex justify-content-end pe-3">
+              <button type="button" class="btn-close btn-danger btn-sm" aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$altjeu.'"></button>
+              </div>';
+            }
 
+            echo'
             <div class="modal fade popup" id="suppression'.$altjeu.'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
