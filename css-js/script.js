@@ -51,6 +51,11 @@ function switchMode() {
     }
     document.getElementById("searchbar").classList.remove("btn-outline-dark");
     document.getElementById("searchbar").classList.add("btn-outline-light");
+    const elementSeeAll = document.getElementById("seeAll");
+    if (elementSeeAll) {
+      elementSeeAll.classList.add("btn-outline-light");
+      elementSeeAll.classList.remove("btn-outline-dark");
+    }
 
     //Transfert
     let mode = "dark"
@@ -96,6 +101,11 @@ function switchMode() {
     }
     document.getElementById("searchbar").classList.remove("btn-outline-light");
     document.getElementById("searchbar").classList.add("btn-outline-dark");
+    const elementSeeAll = document.getElementById("seeAll");
+    if (elementSeeAll) {
+      elementSeeAll.classList.add("btn-outline-dark");
+      elementSeeAll.classList.remove("btn-outline-light");
+    }
 
     //Transfert
     let mode = "light"
@@ -120,17 +130,22 @@ function init() {
 }
 
 function saveRating(e) {
-  removeEventListenerToAllStars();
-  console.log(e.target.dataset.value);
+  // removeEventListenerToAllStars()
+  let note = e.target.dataset.value;
+  let jeu = document.getElementById('nomJeu');
+
+  window.open('verification_notation.php?note=' + note + '/' +jeu.innerHTML, "_self");
 }
+
+/* Useless sert a garder les etoiles quand tu clique mais vu que tu change de page ca sert a rien
 function removeEventListenerToAllStars() {
   stars.forEach(star => {
     star.removeEventListener("click", saveRating);
     star.removeEventListener("mouseover", selected);
     star.removeEventListener("mouseleave", unselected);
   });
-
 }
+*/
 function selected(e, css = "hover-star") {
   const hoveredStar = e.target;
   hoveredStar.classList.add(css);
@@ -153,3 +168,118 @@ function getPreviousSiblings(elem) {
   }
   return siblings;
 }
+
+//----------------------SEARCH BAR----------------------------------------------
+
+function searchGame() {
+  let url = 'suggestion.php';
+  const searchInput = document.getElementById('search');
+
+  url += '?search=' + searchInput.value;
+
+  const request = new XMLHttpRequest();
+  request.open('GET', url);
+  request.onreadystatechange = function() {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      const conteneur = document.getElementById('suggestion');
+      conteneur.innerHTML = request.responseText;
+    }
+  };
+  request.send();
+}
+
+//---------------------------LIKE DISLIKE---------------------------------------
+
+function like() {
+  const likeButton = document.getElementById('like');
+  if (likeButton.classList == "bi bi-hand-thumbs-up-fill mx-3") {
+    likeButton.classList = "bi bi-hand-thumbs-up mx-3";
+    likeButton.style = "color:none; font-size:2rem; transition:0.5s";
+    logsLikeDislike('retiré son like');
+
+  } else {
+    likeButton.classList = "bi bi-hand-thumbs-up-fill mx-3";
+    likeButton.style = "color:blue; font-size:2rem; transition:0.5s";
+    logsLikeDislike('like');
+
+    const dislikeButton = document.getElementById('dislike');
+    dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
+    dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
+  }
+}
+
+function dislike() {
+  const dislikeButton = document.getElementById('dislike');
+  if (dislikeButton.classList == "bi bi-hand-thumbs-down-fill mx-3") {
+    dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
+    dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
+    logsLikeDislike('retiré son dislike');
+
+  } else {
+    dislikeButton.classList = "bi bi-hand-thumbs-down-fill mx-3";
+    dislikeButton.style = "color:red; font-size:2rem; transition:0.5s";
+    logsLikeDislike('dislike');
+
+    const likeButton = document.getElementById('like');
+    likeButton.classList = "bi bi-hand-thumbs-up mx-3";
+    likeButton.style = "color:none; font-size:2rem; transition:0.5s";
+  }
+}
+
+function verifLike() {
+  const elementIdPoste = document.getElementById('idPoste');
+  const idPoste = elementIdPoste.innerHTML;
+  const elementIdCompte = document.getElementById('idCompte');
+  const idCompte = elementIdCompte.innerHTML;
+
+  const request = new XMLHttpRequest();
+  request.open('GET', 'verification_like.php?id='+ idPoste +'&nature=recherche&compte=' + idCompte);
+  request.onreadystatechange = function() {
+    if (request.readyState===XMLHttpRequest.DONE) {
+      if (parseInt(request.responseText) === 1) {
+        like();
+      } else if (parseInt(request.responseText) === 2){
+        dislike();
+      }
+    }
+  };
+  request.send();
+}
+
+function logsLikeDislike(nature) {
+  const elementIdPoste = document.getElementById('idPoste');
+  const idPoste = elementIdPoste.innerHTML;
+  const elementIdCompte = document.getElementById('idCompte');
+  const idCompte = elementIdCompte.innerHTML;
+
+  const request = new XMLHttpRequest();
+  request.open('GET', 'verification_like.php?id='+ idPoste +'&nature='+ nature +'&compte='+ idCompte);
+  request.send();
+}
+
+//----------------------------COMMENTAIRE---------------------------------------
+
+// function commentaire() {
+//   const commentaireInput = document.getElementById('commentaire');
+//   const commentaire = commentaireInput.value;
+//   const elementIdPoste = document.getElementById('idPoste');
+//   const idPoste = elementIdPoste.innerHTML;
+//   const elementIdCompte = document.getElementById('idCompte');
+//   const idCompte = elementIdCompte.innerHTML;
+//
+//   const request = new XMLHttpRequest();
+//   request.open('POST', 'verification_commentaire_poste.php');
+//   request.onreadystatechange = function(){
+//     const verification = (request.responseText)
+//     if (verification === "oui") {
+//
+//     }
+//   };
+//   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//   request.send(`contenu=${COMMENTAIRE.commentaire}& \
+//                 id_poste=${COMMENTAIRE.idPoste}& \
+//                 email=${COMMENTAIRE.idCompte}`);
+//
+//   const liste = document.getElementById('liste_commentaire');
+//
+// }

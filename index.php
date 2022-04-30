@@ -7,10 +7,9 @@
 </head>
 
 <body>
-  <!-- Barre de navigation -->
+
   <?php include "includes/header.php" ?>
 
-    <!-- Jeux defilant -->
     <main>
       <div class="container rounded">
         <div id="tendance" class="carousel slide" data-bs-ride="carousel" data-interval="5000">
@@ -19,16 +18,24 @@
             <button type="button" data-bs-target="#tendance" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#tendance" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
+
+          <?php
+          $query = $bdd -> query('SELECT nom FROM NOTE GROUP BY nom ORDER BY AVG(valeur) DESC');
+          $note = $query -> fetchAll(PDO::FETCH_COLUMN);
+          ?>
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="images/Total War Warhammer 3.jpg" class="d-block w-100">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="imageJeux/<?php echo $note[0] ?>0.jpg" class="d-block w-100">
+              </div>
+              <div class="carousel-item">
+                <img src="imageJeux/<?php echo $note[1] ?>0.jpg" class="d-block w-100">
+              </div>
+              <div class="carousel-item">
+                <img src="imageJeux/<?php echo $note[2] ?>0.jpg" class="d-block w-100">
+              </div>
             </div>
-            <div class="carousel-item">
-              <img src="images/League-of-Legends.jpg" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="images/Monark.png" class="d-block w-100">
-            </div>
+
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#tendance" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -39,19 +46,16 @@
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-        <!-- Fin jeux defilant -->
-
-        <!-- Les jeux -->
 
         <br>
 
         <div class="container categorie rounded align-text-bottom">
           <div class="row align-items-center">
             <div class="col-8">
-              <h5>Nouveaux jeux</h5>         <!-- nouveaux jeux -->
+              <h5>Nouveaux jeux</h5>
             </div>
             <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-              <a class="btn btn-outline-dark" type="submit">Voir plus</a>
+              <a class="btn btn-outline-dark" type="submit" href="liste_jeux.php?search=!nouveaux">Voir plus</a>
             </div>
           </div>
         </div>
@@ -61,31 +65,32 @@
         <div class="container">
 
           <div class="row">
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Total War Warhammer 3.jpg">
+            <?php
+            $query = $bdd -> query('SELECT nom FROM JEUX ORDER BY date_sortie DESC');
+            $count = 0;
+            while($req = $query -> fetch(PDO::FETCH_OBJ)){
+              if ($count < 4) {
+                echo '
+                <div class="col-md col-sm-6 mb-3">
+                  <div class="card">
+                    <a href="'.$req->nom.'"><img class="rounded img-fluid" src="imageJeux/'.$req->nom.'0.jpg"></a>
+                  </div>
+                </div>
+                ';
+                $count += 1;
+              }
+            }
+            while($count < 4){
+              echo '
+              <div class="col-md col-sm-6 mb-3">
+                <div class="card">
+                  <img class="rounded img-fluid" src="imageJeux/placeholder.jpg">
+                </div>
               </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <a href="page_jeu.php?jeu=Elden Ring"><img class="rounded img-fluid" src="imageJeux/Elden Ring0.jpg"></a>
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/League-of-Legends.jpg">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Lost Ark.jpg">
-              </div>
-            </div>
-
+              ';
+              $count += 1;
+            }
+            ?>
           </div>
         </div>
 
@@ -94,7 +99,7 @@
         <div class="container categorie rounded">
           <div class="row align-items-center">
             <div class="col-8">
-              <h5>Jeux populaires</h5>         <!-- jeux populaires-->
+              <h5>Jeux populaires</h5>
             </div>
             <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
               <a class="btn btn-outline-dark" type="submit">Voir plus</a>
@@ -107,78 +112,41 @@
         <div class="container">
 
           <div class="row">
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Total War Warhammer 3.jpg">
+            <?php
+            $query = $bdd -> query('SELECT nom FROM ((SELECT COUNT(id) AS count,nom FROM FAVORI WHERE nom IN (SELECT nom FROM JEUX) GROUP BY nom ORDER BY count DESC)AS temp)');
+            $count = 0;
+            while($req = $query -> fetch(PDO::FETCH_OBJ)){
+              if ($count < 4) {
+                echo '
+                <div class="col-md col-sm-6 mb-3">
+                  <div class="card">
+                    <a href="'.$req->nom.'"><img class="rounded img-fluid" src="imageJeux/'.$req->nom.'0.jpg"></a>
+                  </div>
+                </div>
+                ';
+                $count += 1;
+              }
+            }
+            while($count < 4){
+              echo '
+              <div class="col-md col-sm-6 mb-3">
+                <div class="card">
+                  <img class="rounded img-fluid" src="imageJeux/placeholder.jpg">
+                </div>
               </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Monark.png">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/League-of-Legends.jpg">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Lost Ark.jpg">
-              </div>
-            </div>
-
+              ';
+              $count += 1;
+            }
+            ?>
           </div>
         </div>
 
         <br>
 
-        <div class="container categorie rounded">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h5>Récemment visité</h5>         <!-- jeux recemment visite-->
-            </div>
-            <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-              <a class="btn btn-outline-dark" type="submit">Voir plus</a>
-            </div>
-          </div>
-        </div>
+        <div class="container row">
 
-        <br>
+          <a href="liste_jeux.php" id="seeAll" class="btn btn-outline-light btn-lg">Voir tous les jeux</a>
 
-        <div class="container">
-
-          <div class="row">
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Total War Warhammer 3.jpg">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Monark.png">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/League-of-Legends.jpg">
-              </div>
-            </div>
-
-            <div class="col-md col-sm-6 mb-3">
-              <div class="card">
-                <img class="rounded img-fluid" src="images/Lost Ark.jpg">
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     </div>

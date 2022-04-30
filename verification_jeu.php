@@ -91,15 +91,13 @@ if(isset($_GET['delete'])){
 
       include "resolution.php";
 
-      $request=$bdd->prepare('INSERT INTO JEUX(nom, synopsis, date_sortie, developpeur, note, nb_note, image, systeme, processeur, memoire, graphique, directX, carousel1, carousel2, carousel3, redirection, nb_vues)
-      VALUES (:nom, :synopsis, :date_sortie, :developpeur, :note, :nb_note, :image, :systeme, :processeur, :memoire, :graphique, :directX, :carousel1, :carousel2, :carousel3, :redirection, :nb_vues)');
+      $request=$bdd->prepare('INSERT INTO JEUX(nom, synopsis, date_sortie, developpeur, image, systeme, processeur, memoire, graphique, directX, carousel1, carousel2, carousel3, redirection, nb_vues)
+      VALUES (:nom, :synopsis, :date_sortie, :developpeur, :image, :systeme, :processeur, :memoire, :graphique, :directX, :carousel1, :carousel2, :carousel3, :redirection, :nb_vues)');
       $result=$request->execute([
         'nom' => $_POST['nom'],
         'synopsis' => $_POST['synopsis'],
         'date_sortie' => $date_bdd,
         'developpeur' => $_POST['developpeur'],
-        'note' => 0,
-        'nb_note' => 0,
         'image' => $imagePrincipale,
         'systeme' => $_POST['systeme'],
         'processeur' => $_POST['processeur'],

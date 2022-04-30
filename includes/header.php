@@ -21,9 +21,17 @@
 
     <div class="col-12 col-md-9">
       <form class="d-flex" method="GET" action="liste_jeux.php">
-        <input class="form-control form-control-lg me-3" name="search" type="search" placeholder="Recherche" aria-label="Search">
-        <button id="searchbar" class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
+        <div class="col-10">
+          <input id="search" class="form-control form-control-lg me-3" name="search" type="search" oninput="searchGame()" placeholder="Recherche" aria-label="Search">
+          <div class="absolute" id="suggestion">
+
+          </div>
+        </div>
+        <div class="col-2">
+          <button id="searchbar" class="btn btn-outline-light btn-lg" type="submit">Rechercher</button>
+        </div>
       </form>
+
       <div class="col-md-1"></div>
       <div class="row">
         <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['compte'])){
@@ -53,10 +61,10 @@
             <a class="nav-link" aria-current="page" href="index.php">Accueil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Nouveaux jeux</a>
+            <a class="nav-link" href="liste_jeux.php?jeu=!nouveaux">Nouveaux jeux</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Jeux populaires</a>
+            <a class="nav-link" href="liste_jeux.php?jeu=!populaires">Jeux populaires</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -97,6 +105,9 @@
               </li>';
             }
             ?>
+            <li class="nav-item">
+              <a class="nav-link" href="forum.php">Forum</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="test.php">TEST</a>
             </li>

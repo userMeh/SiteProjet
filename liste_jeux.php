@@ -20,8 +20,14 @@
         <?php
 
         if (isset($_GET['search']) AND !empty($_GET['search'])) {
-          $search = htmlspecialchars($_GET['search']);
-          $query = $bdd -> query('SELECT nom FROM JEUX WHERE nom LIKE "%'.$search.'%"');
+          if ($_GET['search'] == "!nouveaux") {
+            $query = $bdd -> query('SELECT nom FROM JEUX ORDER BY date_sortie DESC');
+          } else if ($_GET['search'] == "!populaires") {
+            $query = $bdd -> query('SELECT nom FROM ((SELECT COUNT(id) AS count,nom FROM FAVORI WHERE nom IN (SELECT nom FROM JEUX) GROUP BY nom ORDER BY count DESC)AS temp)');
+          } else {
+            $search = htmlspecialchars($_GET['search']);
+            $query = $bdd -> query('SELECT nom FROM JEUX WHERE nom LIKE "%'.$search.'%"');
+          }
         } else {
           $query = $bdd -> query('SELECT nom FROM JEUX');
         }
@@ -35,8 +41,6 @@
         $query = $bdd -> query('SELECT date_sortie FROM JEUX');
         $date = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-        $query = $bdd -> query('SELECT nb_vues FROM JEUX');
-        $vues = $query -> fetchAll(PDO::FETCH_COLUMN);
 
         if ($count_jeu == 0) {
           echo '<div class="my-5">
@@ -53,6 +57,20 @@
               'nom' => $jeu[$i]
             ]);
             $extrait = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+            $query = $bdd -> query('SELECT email FROM UTILISATEURS');
+            $vues=0;
+            while($req = $query -> fetch(PDO::FETCH_OBJ)){
+              if (file_exists("logs/visite_jeu/$req->email.txt")) {
+                $fp = fopen("logs/visite_jeu/$req->email.txt","r");
+                while (!feof($fp)) {
+                  $page = fgets($fp, 4096);
+                  if (preg_match("#$jeu[$i]#", $page)) {
+                    $vues+= 1;
+                  }
+                }
+              }
+            }
 
             echo'
             <div class="card text-white bg-dark mb-3">
@@ -94,12 +112,100 @@
             </div>
             </div>
 
-            <p>Developpé par '.$developpeur[$i].'   |   Publié le '.$jour.' '.$mois.' '.$annee.'   |   <img src="images/views-light.png" style="width: 20px;"> '.$vues[$i].' vues</p>
+            <p>Developpé par '.$developpeur[$i].'   |   Publié le '.$jour.' '.$mois.' '.$annee.'   |   <img src="images/views-light.png" style="width: 20px;"> '.$vues.' vues</p>
             <p>'.$extrait[0].'...</p>
 
             </div>
             </div>
             </div>';
+          }
+        }
+
+        if (isset($_GET['search'])) {
+          if ($_GET['search']=="!populaires") {
+            $query = $bdd -> query('SELECT nom FROM JEUX WHERE nom NOT IN (SELECT nom FROM ((SELECT COUNT(id) AS count,nom FROM FAVORI WHERE nom IN (SELECT nom FROM JEUX) GROUP BY nom ORDER BY count DESC)AS temp))');
+
+            $jeu = $query -> fetchAll(PDO::FETCH_COLUMN);
+            $count_jeu = count($jeu);
+
+            $query = $bdd -> query('SELECT developpeur FROM JEUX');
+            $developpeur = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+            $query = $bdd -> query('SELECT date_sortie FROM JEUX');
+            $date = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+            for ($i=0; $i < $count_jeu; $i++) {
+
+              $liste = 1;
+              include "includes/date.php";
+
+              $query = $bdd -> prepare('SELECT SUBSTRING(synopsis,1,450) FROM JEUX WHERE nom=:nom');
+              $req = $query -> execute([
+                'nom' => $jeu[$i]
+              ]);
+              $extrait = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+              $query = $bdd -> query('SELECT email FROM UTILISATEURS');
+              $vues=0;
+              while($req = $query -> fetch(PDO::FETCH_OBJ)){
+                if (file_exists("logs/visite_jeu/$req->email.txt")) {
+                  $fp = fopen("logs/visite_jeu/$req->email.txt","r");
+                  while (!feof($fp)) {
+                    $page = fgets($fp, 4096);
+                    if (preg_match("#$jeu[$i]#", $page)) {
+                      $vues+= 1;
+                    }
+                  }
+                }
+              }
+
+              echo'
+              <div class="card text-white bg-dark mb-3">
+
+              <div class="row">
+              <div class="col-4">
+              <a href="page_jeu.php?jeu='.$jeu[$i].'"><img src="imageJeux/'.$jeu[$i].'0.jpg" class="card-img-top" alt="..."></a>
+              </div>
+              <div class="card-body col-8 row">
+              <div class="col-11 card-title">
+              <h4><a href="page_jeu.php?jeu='.$jeu[$i].'">'.$jeu[$i].'</a></h4>
+              </div>';
+
+              $altjeu = str_replace(" ","-","$jeu[$i]");   //On remplace les espaces par des . pcq sinon ca passe pas en id pour les modals/popup
+
+              if ($admin == 1) {
+                echo'
+                <div class="col-1 d-flex justify-content-end pe-3">
+                <button type="button" class="btn-close btn-danger btn-sm" aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$altjeu.'"></button>
+                </div>';
+              }
+
+              echo'
+              <div class="modal fade popup" id="suppression'.$altjeu.'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="suppressionLabel">Suppression</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              Etes-vous sûr de supprimer ce jeu de la base de donnée? Cet action est irréversible !
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <a type="button" class="btn btn-danger" href="verification_jeu.php?delete='.$altjeu.'">Supprimer</a>
+              </div>
+              </div>
+              </div>
+              </div>
+
+              <p>Developpé par '.$developpeur[$i].'   |   Publié le '.$jour.' '.$mois.' '.$annee.'   |   <img src="images/views-light.png" style="width: 20px;"> '.$vues.' vues</p>
+              <p>'.$extrait[0].'...</p>
+
+              </div>
+              </div>
+              </div>';
+            }
           }
         }
         ?>

@@ -97,6 +97,27 @@ a img:hover{
   color: yellow;
 }
 
+.absolute{
+  position:absolute;
+  width:61%;
+}
+
+.search-suggestions{
+  background-color: white;
+  padding: 5px;
+  padding-left:20px;
+  color: black;
+}
+
+a{
+  text-decoration: none
+}
+
+.search-suggestions:hover{
+  background-color: lightblue;
+  color: white;
+}
+
 /* light and dark */
 
 .dark-mode .container {

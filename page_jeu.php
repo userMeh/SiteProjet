@@ -8,11 +8,7 @@
 
   if (isset($_GET['jeu'])) {          //Pour verifier si le jeu existe
 
-    $array = explode('/', $_GET['jeu']);
-    $jeu = $array[0];
-    if (!empty($array[1])) {
-      $message = $array[1];
-    }
+    $jeu = $_GET['jeu'];
 
     $exist=$bdd->prepare('SELECT nom FROM JEUX WHERE nom=?');
     $exist->execute([
@@ -27,7 +23,6 @@
     header('location:index.php');
     exit;
   }
-  $bdd -> query('UPDATE JEUX SET nb_vues = nb_vues + 1 WHERE nom = "'.$jeu.'"'); //Comptabilise la visite
   if (isset($_SESSION['compte'])) {
     $email = $_SESSION['compte'];
 
@@ -37,10 +32,9 @@
       $query = $bdd -> query('SELECT id FROM BIBLIOTHEQUE ORDER BY id DESC');
       $incr = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-      $prepare = $bdd -> prepare('INSERT INTO BIBLIOTHEQUE(id, nombre_jeux, email) VALUES(:id, :nombre_jeux, :email)');
+      $prepare = $bdd -> prepare('INSERT INTO BIBLIOTHEQUE(id, email) VALUES(:id, :email)');
       $prepare -> execute([
         'id' => $incr[0]+1,
-        'nombre_jeux' => 0,
         'email' => $email
       ]);
 
@@ -70,7 +64,7 @@
       $logs = fopen("logs/visite_jeu/$compte.txt", "a+");
       date_default_timezone_set('Europe/Paris');
       $date = date('d/m/Y à H:i:s');
-      $txt = "$compte a visité la page $jeu le $date\n";
+      $txt = "$compte a visité la page $jeu à ce jour $date\n";
       fwrite($logs, $txt);
       fclose($logs);
     }
@@ -79,7 +73,7 @@
     <div class="container rounded">
 
       <div class="centreur mb-5">
-        <h1><b> <?php echo $jeu ?> </b></h1>
+        <h1><b id="nomJeu"><?php echo $jeu ?></b></h1>
         <div class="row mt-5">
           <div class="col-8" style="border-right:solid #3f3f3f;">
             <img class="images img-thumbnail" src='imageJeux/<?php
@@ -100,7 +94,17 @@
               <hr size="5">
               <div>
                 <i class="bi-star-half" style="font-size: 4rem; color: yellow;"></i>
-                <p class="fs-2">4/5</p>
+                <p class="fs-2">
+                  <?php
+                  $query = $bdd -> query('SELECT CAST(AVG(valeur) AS DECIMAL(2,1)) AS note FROM NOTE WHERE nom="'.$jeu.'"');
+                  $note = $query -> fetch();
+                  if (!$note['note']) {
+                    echo "-";
+                  } else {
+                    echo $note['note'];
+                  }
+                  ?>
+                </p>
               </div>
               <hr size="5" style="margin:0;">
             </div>
@@ -108,10 +112,21 @@
               <div class="col-6 pt-4">
                 <p class="fs-5">Nombre de vues</p>
                 <?php
-                $query = $bdd -> query('SELECT nb_vues FROM JEUX WHERE nom="'.$jeu.'"');
-                $vues = $query -> fetchAll(PDO::FETCH_COLUMN);
+                $query = $bdd -> query('SELECT email FROM UTILISATEURS');
+                $vues=0;
+                while($req = $query -> fetch(PDO::FETCH_OBJ)){
+                  if (file_exists("logs/visite_jeu/$req->email.txt")) {
+                    $fp = fopen("logs/visite_jeu/$req->email.txt","r");
+                    while (!feof($fp)) {
+                      $page = fgets($fp, 4096);
+                      if (preg_match("#$jeu#", $page)) {
+                        $vues+= 1;
+                      }
+                    }
+                  }
+                }
                 ?>
-                <p class="fs-4"><?php echo $vues[0].' <i class="bi-eye" style="font-size: 1.5rem;"></i>' ?></p>
+                <p class="fs-4"><?php echo $vues.' <i class="bi-eye" style="font-size: 1.5rem;"></i>' ?></p>
               </div>
               <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
                 <p class="fs-5" style="margin:0;">Favori</p>

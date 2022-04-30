@@ -9,7 +9,7 @@ if (isset($_GET['modify1'])) {
     'nom' => $_GET['modify1']
   ]);
   $message="succès modification";
-  header('location:page_jeu.php?jeu='.$_GET['modify1'].'/'.$message);
+  header('location:page_jeu.php?jeu='.$_GET['modify1'].'&message='.$message);
   exit;
 }
 
@@ -17,7 +17,7 @@ if (isset($_GET['modify2'])) {
   $array = explode('/', $_POST['date_sortie']);
   if (count($array) != 3) {
     $message="La date de sortie n'est pas écrit dans le bon format";
-    header('location:page_jeu.php?jeu='.$_GET['modify2'].'/'.$message);
+    header('location:page_jeu.php?jeu='.$_GET['modify2'].'&message='.$message);
     exit;
   } else {
     $jour = current($array);
@@ -30,7 +30,7 @@ if (isset($_GET['modify2'])) {
       echo $date_bdd;
     } else {
       $message="Les informations de la date de sortie sont invalides";
-      header('location:page_jeu.php?jeu='.$_GET['modify2'].'/'.$message);
+      header('location:page_jeu.php?jeu='.$_GET['modify2'].'&message='.$message);
       exit;
     }
   }
@@ -45,7 +45,7 @@ if (isset($_GET['modify2'])) {
     'nom' => $_GET['modify2']
   ]);
   $message="succès modification";
-  header('location:page_jeu.php?jeu='.$_GET['modify2'].'/'.$message);
+  header('location:page_jeu.php?jeu='.$_GET['modify2'].'&message='.$message);
   exit;
 }
 
@@ -81,7 +81,7 @@ if (isset($_GET['modify3'])) {
     'nom' => $_GET['modify3']
   ]);
   $message="succès modification";
-  header('location:page_jeu.php?jeu='.$_GET['modify3'].'/'.$message);
+  header('location:page_jeu.php?jeu='.$_GET['modify3'].'&message='.$message);
   exit;
 }
 

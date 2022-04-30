@@ -27,8 +27,7 @@ if (isset($_GET['fav'])) {
   fclose($logs);
 
   header('location:page_jeu.php?jeu='.$jeu.'');
-
-
+  exit;
 
 } else if(isset($_GET['defav'])) {
 
@@ -55,10 +54,10 @@ if (isset($_GET['fav'])) {
   fclose($logs);
 
   header('location:page_jeu.php?jeu='.$jeu.'');
-
-
+  exit;
 
 } else {
   header('location:index.php');
+  exit;
 }
 ?>
