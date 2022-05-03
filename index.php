@@ -73,7 +73,7 @@
                 echo '
                 <div class="col-md col-sm-6 mb-3">
                   <div class="card">
-                    <a href="'.$req->nom.'"><img class="rounded img-fluid" src="imageJeux/'.$req->nom.'0.jpg"></a>
+                    <a href="page_jeu.php?jeu='.$req->nom.'"><img class="rounded img-fluid" src="imageJeux/'.$req->nom.'0.jpg"></a>
                   </div>
                 </div>
                 ';
@@ -102,7 +102,7 @@
               <h5>Jeux populaires</h5>
             </div>
             <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-              <a class="btn btn-outline-dark" type="submit">Voir plus</a>
+              <a class="btn btn-outline-dark" type="submit" href="liste_jeux.php?search=!populaires">Voir plus</a>
             </div>
           </div>
         </div>

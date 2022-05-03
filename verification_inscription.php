@@ -89,7 +89,7 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
                 'email' => $_POST['email'],
                 'mdp' => hash('sha512', $_POST['mdp']),
                 'prix' => 0,
-                'type' => 'utilisateur',
+                'type' => 0,
                 'date_creation' => $date_creation,
                 'verifie' => 'non',
                 'cle_verif' => $vCle

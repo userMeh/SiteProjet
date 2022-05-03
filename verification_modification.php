@@ -1,6 +1,13 @@
 <?php
 
 include "includes/bdd.php";
+session_start();
+
+if (isset($_POST['status'])) {
+  $bdd -> query('UPDATE UTILISATEURS SET status="'.$_POST['status'].'" WHERE email="'.$_SESSION['compte'].'"');
+  header('location:profil.php');
+  exit;
+}
 
 if(isset($_GET['modify'])){
 
@@ -92,6 +99,16 @@ if(isset($_GET['modify'])){
   $txt = "$email[0] a été supprimé le $date\n";
   fwrite($logs, $txt);
   fclose($logs);
+
+  $pseudo = $_GET['delete'];
+
+  $bdd -> query('SELECT id FROM BIBLIOTHEQUE WHERE email =(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'")');
+  $bdd -> query('DELETE FROM FAVORI WHERE id=(SELECT id FROM BIBLIOTHEQUE WHERE email =(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'"))');
+  $bdd -> query('DELETE FROM BIBLIOTHEQUE WHERE email =(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'")');
+
+  $bdd -> query('SELECT id FROM POSTE WHERE email=(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'")');
+  $bdd -> query('DELETE FROM COMMENTAIRE WHERE id_poste=(SELECT id FROM POSTE WHERE email=(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'"))');
+  $bdd -> query('DELETE FROM POSTE WHERE email=(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'")');
 
   $delete = $bdd->prepare('DELETE FROM UTILISATEURS WHERE pseudo=:pseudo');
   $delete -> execute([

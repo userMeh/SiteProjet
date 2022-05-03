@@ -73,7 +73,7 @@
             }
 
             echo'
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-light bg-dark mb-3">
 
             <div class="row">
             <div class="col-4">
@@ -81,7 +81,7 @@
             </div>
             <div class="card-body col-8 row">
             <div class="col-11 card-title">
-            <h4><a href="page_jeu.php?jeu='.$jeu[$i].'">'.$jeu[$i].'</a></h4>
+            <h4><a href="page_jeu.php?jeu='.$jeu[$i].'" class="text-light">'.$jeu[$i].'</a></h4>
             </div>';
 
             $altjeu = str_replace(" ","-","$jeu[$i]");   //On remplace les espaces par des . pcq sinon ca passe pas en id pour les modals/popup
@@ -160,7 +160,7 @@
               }
 
               echo'
-              <div class="card text-white bg-dark mb-3">
+              <div class="card text-light bg-dark mb-3">
 
               <div class="row">
               <div class="col-4">
@@ -168,7 +168,7 @@
               </div>
               <div class="card-body col-8 row">
               <div class="col-11 card-title">
-              <h4><a href="page_jeu.php?jeu='.$jeu[$i].'">'.$jeu[$i].'</a></h4>
+              <h4><a href="page_jeu.php?jeu='.$jeu[$i].'" class="text-light">'.$jeu[$i].'</a></h4>
               </div>';
 
               $altjeu = str_replace(" ","-","$jeu[$i]");   //On remplace les espaces par des . pcq sinon ca passe pas en id pour les modals/popup

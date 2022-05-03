@@ -7,6 +7,9 @@
     $query = $bdd -> query('SELECT titre FROM POSTE WHERE id ="'.$id.'"');
     $titre = $query -> fetch();
 
+    $query = $bdd -> query('SELECT email FROM POSTE WHERE id='.$id.'');
+    $email = $query -> fetch();
+
     $query = $bdd -> query('SELECT pseudo FROM UTILISATEURS WHERE email=(SELECT email FROM POSTE WHERE id ='.$id.')');
     $auteur = $query -> fetch();
 
@@ -36,7 +39,7 @@
         </div>
 
         <div class="d-flex justify-content-end me-5">
-          <p class="fst-italic fs-4"><?php echo $auteur['pseudo'] ?></p>
+          <a href="profil.php?visit=<?php $email['email'] ?>" class="text-light"><p class="fst-italic fs-4"><?php echo $auteur['pseudo'] ?></p></a>
         </div>
 
         <?php include "includes/count_like_dislike.php" ?>
@@ -49,16 +52,25 @@
         <hr size="5">
 
         <h2 class="d-flex justify-content-center">Commentaires</h2>
-        <form action="verification_commentaire_poste.php" method="post">
-          <div class="my-3">
-            <label for="commentaire" class="form-label">Mettez un commentaire</label>
-            <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
-          </div>
-          <div style="display:none"><input value="<?php echo $id ?>" name="idPoste"></input></div>
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
-          </div>
-        </form>
+
+          <?php
+          if(isset($_SESSION['compte'])){
+            echo '
+            <form action="verification_commentaire_poste.php" method="post">
+              <div class="my-3">
+                <label for="commentaire" class="form-label">Mettez un commentaire</label>
+                <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
+              </div>
+              <div style="display:none"><input value=" '.$id.' " name="idPoste"></input></div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
+              </div>
+            </form>
+            ';
+          }
+
+          ?>
+
 
         <hr size="5">
 
@@ -72,11 +84,14 @@
         $idCommentaire = $query -> fetchAll(PDO::FETCH_COLUMN);
         $countCommentaire = count($idCommentaire);
 
+        $query = $bdd -> query('SELECT email FROM COMMENTAIRE WHERE id_poste="'.$id.'"');
+        $email = $query -> fetchAll(PDO::FETCH_COLUMN);
+
         $query = $bdd -> query('SELECT pseudo FROM UTILISATEURS WHERE email=(SELECT email FROM COMMENTAIRE WHERE id="'.$id.'")');
         $auteur = $query -> fetchAll(PDO::FETCH_COLUMN);
 
         $query = $bdd -> query('SELECT date_commentaire FROM COMMENTAIRE WHERE id_poste="'.$id.'"');
-        $date = $query -> fetchAll(PDO::FETCH_COLUMN);
+        $date_commentaire = $query -> fetchAll(PDO::FETCH_COLUMN);
 
         $query = $bdd -> query('SELECT heure_commentaire FROM COMMENTAIRE WHERE id_poste="'.$id.'"');
         $heure = $query -> fetchAll(PDO::FETCH_COLUMN);
@@ -87,13 +102,19 @@
           $query = $bdd->query('SELECT pseudo FROM UTILISATEURS WHERE email=(SELECT email FROM COMMENTAIRE WHERE id="'.$idCommentaire[$i].'")');
           $auteur = $query->fetch();
 
+          $array = explode('-', $date_commentaire[$i]);
+          $annee = current($array);
+          $mois = next($array);
+          $jour = next($array);
+          $date = $jour .'/'. $mois .'/'. $annee;
+
           echo '
           <div class="d-flex justify-content-center mb-5">
             <div class="card w-75">
-              <div class="card-body text-white bg-dark p-3">
-                <h5 class="card-title p-3"><b class="fs-4 text-uppercase">'.$auteur['pseudo'].'</b></h5>
+              <div class="card-body text-light bg-dark p-3">
+                <h5 class="card-title p-3"><a href="profil.php?visit='.$email[$i].'" class="text-light"><b class="fs-4 text-uppercase">'.$auteur['pseudo'].'</b></a></h5>
                 <p class="card-text p-3">'.$commentaire['contenu'].'</p>
-                <p class="card-text col-9"><small class="text-muted">Posté le '.$date[$i].' à '.$heure[$i].'</small></p>
+                <p class="card-text col-9"><small class="text-muted">Posté le '.$date.' à '.$heure[$i].'</small></p>
               </div>
             </div>
           </div>';

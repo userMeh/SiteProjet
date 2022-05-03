@@ -1,12 +1,15 @@
 var state = "light"; // le state du button pas de la page
+var launch = "instant";
 
-receive = localStorage.getItem("mode");
-if (receive == "light") {
-  state = "light";
-  var launch = "instant"
-  switchMode();
-  launch = "slow"
-}
+window.addEventListener('load', (event) => {
+  receive = localStorage.getItem("mode");
+  if (receive == "light") {
+    state = "light";
+    var launch = "instant"
+    switchMode();
+    launch = "slow"
+  }
+});
 
 function switchMode() {
   let element = document.body;
@@ -49,6 +52,27 @@ function switchMode() {
       button.item(0).classList.add('btn-outline-dark');
       button[0].classList.remove('btn-outline-light');
     }
+
+    //Change les background
+    let background = document.getElementsByClassName("bg-light");
+
+    while (background.length > 0) {
+      background.item(0).classList.add('bg-dark');
+      background[0].classList.remove('bg-light');
+    }
+    let table = document.getElementsByClassName("table-light");
+
+    while (table.length > 0) {
+      table.item(0).classList.add('table-dark');
+      table[0].classList.remove('table-light');
+    }
+    let text = document.getElementsByClassName("text-dark");
+
+    while (text.length > 0) {
+      text.item(0).classList.add('text-light');
+      text[0].classList.remove('text-dark');
+    }
+
     document.getElementById("searchbar").classList.remove("btn-outline-dark");
     document.getElementById("searchbar").classList.add("btn-outline-light");
     const elementSeeAll = document.getElementById("seeAll");
@@ -62,6 +86,7 @@ function switchMode() {
     localStorage.setItem("mode", mode);
 
     state = "light";
+//------------------------------------------------------------------------------
   } else {
 
     element.className = "light-mode";
@@ -73,6 +98,26 @@ function switchMode() {
       document.getElementById("lightDark").style.transition = "0.5s";
     } else {
       document.getElementById("lightDark").style.transition = "none";
+    }
+
+    //Change la couleur du background
+    let background = document.getElementsByClassName("bg-dark");
+
+    while (background.length > 0) {
+      background.item(0).classList.add('bg-light');
+      background[0].classList.remove('bg-dark');
+    }
+    let table = document.getElementsByClassName("table-dark");
+
+    while (table.length > 0) {
+      table.item(0).classList.add('table-light');
+      table[0].classList.remove('table-dark');
+    }
+    let text = document.getElementsByClassName("text-light");
+
+    while (text.length > 0) {
+      text.item(0).classList.add('text-dark');
+      text[0].classList.remove('text-light');
     }
 
     //Change l'icone
@@ -196,6 +241,7 @@ function like() {
     likeButton.classList = "bi bi-hand-thumbs-up mx-3";
     likeButton.style = "color:none; font-size:2rem; transition:0.5s";
     logsLikeDislike('retiré son like');
+    numberLike = likeButton.innerHTML;
 
   } else {
     likeButton.classList = "bi bi-hand-thumbs-up-fill mx-3";
@@ -214,6 +260,7 @@ function dislike() {
     dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
     dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
     logsLikeDislike('retiré son dislike');
+    numberDislike = dislike
 
   } else {
     dislikeButton.classList = "bi bi-hand-thumbs-down-fill mx-3";
@@ -254,6 +301,32 @@ function logsLikeDislike(nature) {
 
   const request = new XMLHttpRequest();
   request.open('GET', 'verification_like.php?id='+ idPoste +'&nature='+ nature +'&compte='+ idCompte);
+  request.send();
+}
+
+//-----------------------------SEARCH POST--------------------------------------
+
+function searchPost(info) {
+
+  const compte = document.getElementById('compte').innerHTML;
+  const searchInput = document.getElementById('searchPost');
+  let url = 'includes/search_post.php?session=' + compte;
+
+  if (typeof info !== 'undefined') {
+    url += '&search=' + info;
+  } else if (searchInput.value.length > 1) {
+    url += '&search=' + searchInput.value;
+  }
+
+  const request = new XMLHttpRequest();
+  request.open('GET', url);
+  console.log(url);
+  request.onreadystatechange = function() {
+    if (request.readyState===XMLHttpRequest.DONE) {
+      const conteneur = document.getElementById('post');
+      conteneur.innerHTML = request.responseText;
+    }
+  };
   request.send();
 }
 

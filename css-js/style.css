@@ -152,3 +152,6 @@ a{
   background: #f8f9fa;
   transition: 0.5s;
 }
+.bg-dark, .bg-light, .table, .text-dark, .text-light{
+  transition: 0.5s;
+}

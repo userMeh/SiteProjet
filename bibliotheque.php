@@ -4,8 +4,12 @@
     <?php
     include "includes/head.php";
 
-    if (!isset($_SESSION['compte'])){
+    if (!isset($_SESSION['compte']) && !isset($_GET['visit'])){
       header("location:index.php");
+    } else if(isset($_GET['visit'])) {
+      $compte = $_GET['visit'];
+    } else {
+      $compte = $_SESSION['compte'];
     }
     ?>
     <meta charset="utf-8">
@@ -17,7 +21,7 @@
     <?php include "includes/header.php" ?>
 
     <?php
-    $query = $bdd -> query('SELECT id FROM BIBLIOTHEQUE WHERE email="'.$_SESSION['compte'].'"');
+    $query = $bdd -> query('SELECT id FROM BIBLIOTHEQUE WHERE email="'.$compte.'"');
     $id = $query -> fetchAll(PDO::FETCH_COLUMN);
 
     $query = $bdd -> query('SELECT nom FROM FAVORI WHERE id='.$id[0].'');

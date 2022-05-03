@@ -46,7 +46,7 @@
               for ($i=0; $i < $users; $i++) {
                 echo
                 '<tr>
-                  <th scope="row">'.$pseudo[$i].'</th>
+                  <th scope="row"><a href="profil.php?visit='.$email[$i].'" class="text-light">'.$pseudo[$i].'</a></th>
                   <td>'.$email[$i].'</td>
                   ';
                   if ($type[$i] == 1) {

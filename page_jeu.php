@@ -207,7 +207,12 @@
       </div>
     </div>
     <div class="container">
-      <h1>Synopsis <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-synopsis">Editer</button></h1>
+
+      <h1>Synopsis
+      <?php if ($admin == 1) {
+        echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-synopsis">Editer</button>';
+      }
+      ?> </h1>
       <p>
 
         <?php
@@ -218,7 +223,11 @@
 
       </p>
       <hr>
-      <h2>A Propos du jeu <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-aPropos">Editer</button></h2>
+      <h2>A Propos du jeu
+      <?php if ($admin == 1) {
+        echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-aPropos">Editer</button>';
+      }
+      ?></h2>
       <br>
       <p>
 
@@ -240,7 +249,11 @@
           echo $developpeur[0];
         ?>
         <br><hr>
-        <h2>Configuration recommandée <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-config">Editer</button></h2>
+        <h2>Configuration recommandée
+          <?php if ($admin == 1) {
+            echo '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-config">Editer</button>';
+          }
+          ?></h2>
         <br>
         <b>OS</b>:
         <?php
