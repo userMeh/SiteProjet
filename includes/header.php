@@ -40,7 +40,12 @@
           echo 'href="connexion.php">Connexion</a>';
         }
         ?>
-        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="inscription.php">Inscription</a>
+        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['compte'])){
+          echo 'href="deconnexion.php">Deconnexion</a>';
+        } else {
+          echo 'href="inscription.php">Inscription</a>';
+        }
+        ?>
         <?php
         if ($admin == 1) {
           echo '<a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="ajout_jeu.php">Ajouter un jeu</a>';

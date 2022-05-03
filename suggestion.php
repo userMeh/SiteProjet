@@ -10,7 +10,7 @@ if (isset($_GET['search'])) {
 
   $count = 0;
   while($req = $query -> fetch(PDO::FETCH_OBJ)){
-    if ($count < 6) {
+    if ($count < 4) {
       echo '<a href="page_jeu.php?jeu='.$req->nom.'">
               <div class="search-suggestions">'.$req -> nom.'</div>
             </a>';

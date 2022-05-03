@@ -52,7 +52,7 @@
 
         <?php
 
-        $sql = 'SELECT id, titre, tag, SUBSTRING(contenu,1,200) AS contenu FROM POSTE';
+        $sql = 'SELECT id, titre, tag, SUBSTRING(contenu,1,200) AS contenu FROM POSTE WHERE email="'.$compte.'"';
         $query = $bdd-> query($sql);
         $postes = $query -> fetchAll(PDO::FETCH_ASSOC);
 
@@ -65,18 +65,24 @@
             <h3 class="d-flex justify-content-center">Favoris</h3>
             <div class="border border-secondary border-3 p-3">
               <?php
+              $exist = 0;
               for ($i=0; $i < 2; $i++) {
                 if (isset($jeu[$i])) {
                   echo '<a href="page_jeu.php?jeu='.$jeu[$i].'"><img src="imageJeux/'.$jeu[$i].'0.jpg" class="img-thumbnail"></a>';
+                  $exist = 1;
                 }
               }
+              if ($exist == 0) {
+                echo '<p class="text-secondary fs-2 text-center">Aucun favori</p>';
+              } else {
+                echo '<a href="bibliotheque.php?visit=$compte" class="d-flex justify-content-center btn btn-primary mt-3">Voir sa bibliothèque</a>';
+              }
               ?>
-              <a href="bibliotheque.php?visit=<?php echo $compte ?>" class="d-flex justify-content-center btn btn-primary mt-3">Voir sa bibliothèque</a>
             </div>
           </div>
           <div class="col">
             <h3 class="d-flex justify-content-center">Postes récents</h3>
-            <div class="border border-secondary border-3">
+            <div class="border border-secondary border-3 p-3">
               <?php
 
               $i = 0;
@@ -101,6 +107,9 @@
                 }
                 $i++;
               }
+              if ($i == 0) {
+                echo '<p class="text-secondary fs-2 text-center">Aucun poste récent</p>';
+              }
               ?>
             </div>
           </div>
@@ -108,7 +117,6 @@
 
       </div>
     </main>
-    <a href="deconnexion.php">Deconnexion</a>
     <?php include "includes/footer.php" ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

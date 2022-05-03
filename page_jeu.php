@@ -300,6 +300,88 @@
         ?>
         " class="btn btn-info">Cliquer ici</a>
       </p>
+
+      <hr size="5">
+
+      <h2 class="d-flex justify-content-center">Commentaires</h2>
+
+      <?php
+      if(isset($_SESSION['compte'])){
+        echo '
+        <form action="verification_commentaire_jeu.php" method="post">
+          <div class="my-3">
+            <label for="commentaire" class="form-label">Mettez un commentaire</label>
+            <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
+          </div>
+          <div style="display:none"><input value="'.$jeu.'" name="nomJeu"></input></div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
+          </div>
+        </form>
+        ';
+      }
+      ?>
+
+      <hr size="5">
+
+      <?php
+
+      $query = $bdd -> query('SELECT id, date, heure, email, contenu FROM COMMENTAIRE_JEUX');
+      $commentaires = $query -> fetchAll(PDO::FETCH_ASSOC);
+
+      foreach ($commentaires as $commentaire) {
+        $array = explode('-', $commentaire['date']);
+        $annee = current($array);
+        $mois = next($array);
+        $jour = next($array);
+        $date = $jour .'/'. $mois .'/'. $annee;
+
+        $query = $bdd -> query('SELECT pseudo FROM UTILISATEURS WHERE email="'.$commentaire['email'].'"');
+        $auteur = $query -> fetch();
+
+        echo '
+        <div class="d-flex justify-content-center mb-5">
+          <div class="card w-75">
+            <div class="card-body text-light bg-dark p-3">
+            <div class="row">
+              <h5 class="card-title p-3 col-11"><a href="profil.php?visit='.$commentaire['email'].'" class="text-light"><b class="fs-4 text-uppercase">'.$auteur['pseudo'].'</b></a></h5>';
+              if ($admin == 1) {
+                echo '
+                  <div class="col-1 d-flex justify-content-end">
+                    <button type="button" class="btn-close btn-danger btn-sm " aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$commentaire['id'].'"></button>
+                  </div>';
+              }
+              echo '
+              </div>
+              <p class="card-text p-3">'.$commentaire['contenu'].'</p>
+              <p class="card-text col-9"><small class="text-muted">Posté le '.$date.' à '.$commentaire['heure'].'</small></p>
+            </div>
+          </div>
+        </div>';
+
+        if ($admin == 1) {
+          echo '
+          <div class="modal fade popup" id="suppression'.$commentaire['id'].'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="suppressionLabel">Suppression</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Etes-vous sûr de supprimer ce commentaire de la base de donnée? Cet action est irréversible !
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <a type="button" class="btn btn-danger" href="verification_commentaire_jeu.php?delete='.$commentaire['id'].'">Supprimer</a>
+                </div>
+              </div>
+            </div>
+          </div>';
+        }
+      }
+
+      ?>
     </div>
   </main>
 

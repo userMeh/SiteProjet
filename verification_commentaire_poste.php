@@ -11,6 +11,13 @@ if (!$id) {
   $id = $id[0]+1;
 }
 
+if (isset($_GET['delete'])) {
+  $query = $bdd -> query('SELECT id_poste FROM COMMENTAIRE WHERE id="'.$_GET['delete'].'"');
+  $id_poste = $query -> fetch();
+  $query = $bdd -> query('DELETE FROM COMMENTAIRE WHERE id="'.$_GET['delete'].'"');
+  header('location:page_poste.php?id='.$id_poste['id_poste']);
+}
+
 date_default_timezone_set('Europe/Paris');
 $date_commentaire = date('d/m/Y');
 
@@ -33,6 +40,7 @@ $result=$request->execute([
   'heure_commentaire' => $heure_commentaire
 ]);
 
-header('location:page_poste.php?id='.$_POST['idPoste'])
+header('location:page_poste.php?id='.$_POST['idPoste']);
+exit;
 
 ?>

@@ -15,6 +15,13 @@ if (!$id) {
   $id = $id[0]+1;
 }
 
+if (isset($_GET['delete'])) {
+  $bdd -> query('DELETE FROM COMMENTAIRE WHERE id_poste="'.$_GET['delete'].'"');
+  $bdd -> query('DELETE FROM POSTE WHERE id="'.$_GET['delete'].'"');
+  header('location:forum.php');
+  exit;
+}
+
 date_default_timezone_set('Europe/Paris');
 $date_poste = date('d/m/Y');
 

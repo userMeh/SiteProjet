@@ -61,14 +61,13 @@
                 <label for="commentaire" class="form-label">Mettez un commentaire</label>
                 <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
               </div>
-              <div style="display:none"><input value=" '.$id.' " name="idPoste"></input></div>
+              <div style="display:none"><input value="'.$id.'" name="idPoste"></input></div>
               <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
               </div>
             </form>
             ';
           }
-
           ?>
 
 
@@ -112,13 +111,42 @@
           <div class="d-flex justify-content-center mb-5">
             <div class="card w-75">
               <div class="card-body text-light bg-dark p-3">
-                <h5 class="card-title p-3"><a href="profil.php?visit='.$email[$i].'" class="text-light"><b class="fs-4 text-uppercase">'.$auteur['pseudo'].'</b></a></h5>
+              <div class="row">
+                <h5 class="card-title p-3 col-11"><a href="profil.php?visit='.$email[$i].'" class="text-light"><b class="fs-4 text-uppercase">'.$auteur['pseudo'].'</b></a></h5>';
+                if ($admin == 1) {
+                  echo '
+                    <div class="col-1 d-flex justify-content-end">
+                      <button type="button" class="btn-close btn-danger btn-sm " aria-label="Close" data-bs-toggle="modal" data-bs-target="#suppression'.$idCommentaire[$i].'"></button>
+                    </div>';
+                }
+                echo '
                 <p class="card-text p-3">'.$commentaire['contenu'].'</p>
                 <p class="card-text col-9"><small class="text-muted">Posté le '.$date.' à '.$heure[$i].'</small></p>
               </div>
             </div>
           </div>';
+
+          if ($admin == 1) {
+            echo '
+            <div class="modal fade popup" id="suppression'.$idCommentaire[$i].'" tabindex="-1" aria-labelledby="suppressionLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="suppressionLabel">Suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Etes-vous sûr de supprimer ce commentaire de la base de donnée? Cet action est irréversible !
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <a type="button" class="btn btn-danger" href="verification_commentaire_poste.php?delete='.$idCommentaire[$i].'">Supprimer</a>
+                  </div>
+                </div>
+              </div>
+            </div>';
         }
+      }
 
         ?>
       </div>
