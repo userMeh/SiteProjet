@@ -1,11 +1,14 @@
 <?php
 
+echo $_POST['duree'];
+
+ini_set('display_errors', 1);
+
 include ('includes/bdd.php');
 
-
-$doublon=$bdd->prepare('SELECT id FROM TOURNOI WHERE id=?');
+$doublon=$bdd->prepare('SELECT nom_du_jeu FROM TOURNOI WHERE nom_du_jeu=?');
 $doublon->execute([
-  $_POST['id']
+  $_POST['nom_du_jeux'],
 ]);
 
 $result=$doublon->fetchAll(); //Recupere les utilisateurs sous forme de tableau
@@ -13,62 +16,48 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
   $message="Le tournoi est déjà ajouté ou le nom est déjà utilisé";
   header('location:ajout_tournoi.php?message='.$message);
   exit;
-} else {
-  $array = explode('/', $_POST['date_de_depart']);
-  if (count($array) != 3) {
-    $message="La date de sortie n'est pas écrit dans le bon format";
+}
+  $date = date('d-m-y');
+  if ($_POST['date_de_depart'] > $_POST['duree'] && $date < $_POST['date_de_depart'] ) {
+    $message="Les informations de la date de depart ou la date de fin sont invalides";
     header('location:ajout_tournoi.php?message='.$message);
     exit;
-  } else {
-    $jour = current($array);
-    $mois = next($array);
-    $annee = next($array);
+  }
 
-    if ($jour <=31 && $mois <= 12 && $annee >= date('Y')) {
-      $date_de_depart = $jour .'/'. $mois .'/'. $annee;
-    } else {
-      $message="Les informations de la date de depart sont invalides";
-      header('location:ajout_tournoi.php?message='.$message);
-      exit;
+    $uploads = 'imagetournoi';
+
+    if(!file_exists($uploads)){
+      mkdir($uploads,0777);
     }
 
-    if ($jour <=31 && $mois <= 12 && $annee >= date('Y')) {
-      $duree = $jour .'/'. $mois .'/'. $annee;
-    } else {
-      $message="Les informations de la date de depart sont invalides";
-      header('location:ajout_tournoi.php?message='.$message);
-      exit;
-    }
-    
-    if(!file_exists($uploadsPath)){
-      mkdir($uploadsPath,0777);
-    }
-
-    $imagePrincipale = $_FILES['image']['nom_du_jeux'];
+    $imagePrincipale = $_FILES['imagePrincipale']['name'];
     $array = explode('.', $imagePrincipale);
     $ext = end($array);
     $imagePrincipale = $_POST['nom_du_jeux'] . '0' . '.' . $ext;
-    $destination = $uploadsPath . '/' . $imagePrincipale;
-    move_uploaded_file($_FILES['image']['nom_du_jeux'], $destination);
+    $destination = $uploads . '/' . $imagePrincipale;
+    move_uploaded_file($_FILES['imagePrincipale']['tmp_name'], $destination);
 
-    include "resolution.php";
+    var_dump($_FILES);
 
-    $request=$bdd->prepare('INSERT INTO TOURNOI(nom_du_jeux,description, date_de_depart, duree, image, id, participant_actuel, nombre_participant)
-    VALUES (:nom_du_jeux,:description,:date_de_depart, :duree, :image, :id, :participant_actuel, :nombre_participant)');
+
+
+    $request=$bdd->prepare('INSERT INTO TOURNOI(nom_du_jeu,description, date_de_depart, duree, image, participant_actuel, nombre_participant, recompense)
+    VALUES (:nom_du_jeu,:description,:date_de_depart, :duree, :image, :participant_actuel, :nombre_participant, :recompense)');
     $result=$request->execute([
-      'id' => $_POST['id'],
-      'nom_du_jeux' => $_POST['nom_du_jeux'],
+      'nom_du_jeu' => $_POST['nom_du_jeux'],
       'description' => $_POST['description'],
       'date_de_depart' => $_POST['date_de_depart'],
       'participant_actuel' => 0,
       'nombre_participant' => $_POST['nombre_participant'],
       'image' => $imagePrincipale,
-      'duree' => $_POST['duree']
+      'duree' => $_POST['duree'],
+      'recompense' => $_POST['recompense']
     ]);
-  }
+
+
 
   if($result){
-    $message="succès tournoi creer";
+    $message="succès tournoi";
     header('location:ajout_tournoi.php?message='.$message);
     exit;
   } else {
@@ -76,5 +65,5 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
     header('location:ajout_tournoi.php?message='.$message);
     exit;
   }
-}
+
 ?>
