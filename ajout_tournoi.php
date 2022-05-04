@@ -8,12 +8,7 @@
 <main class="container p-5">
   <br>
   <div>
-    <form action="verification_tournoi.php" method="post" enctype="multipart/form-data">
-
-      <div class="mb-3">
-        <label for="id" class="form-label">ID (ex: 14)</label>
-        <input type="number" name="id" class="form-control" required>
-      </div>
+    <form action="verification_tournoi.php" method="POST" enctype="multipart/form-data">
 
       <div class="mb-3">
         <label for="nom_du_jeux" class="form-label">Nom du Tournoi / (jeux)</label>
@@ -22,12 +17,17 @@
 
       <div class="mb-3">
         <label for="nombre_participant" class="form-label">Nombre de participant maximun</label>
-        <input type="text" name="nombre_participant" class="form-control" required>
+        <input type="number" name="nombre_participant" class="form-control" required>
       </div>
 
       <div class="form-group mb-3">
         <label for="description">Regle du Tournoi</label>
         <textarea name="description" class="form-control" rows="10"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="recompense" class="form-label">Recompense</label>
+        <input type="text" name="recompense" class="form-control" required>
       </div>
 
       <div class="mb-3">
