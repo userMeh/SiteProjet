@@ -36,8 +36,8 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Verification compte Logic-Gaming';
     $mail->Body    = '<h2>Vous avez créé un compte sur Logic-Gaming</h2>
-                      <p>Veuillez finaliser la création de votre compte en cliquant <a href="http://164.132.229.139/verification_inscription.php?cle='.$vCle.'">ici</a><p>';
-                      
+                      <p>Veuillez finaliser la création de votre compte en cliquant <a href="https://logic-gaming.online/verification_inscription.php?cle='.$vCle.'">ici</a><p>';
+
     //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
@@ -45,7 +45,5 @@ try {
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
-?>
 
 ?>

@@ -73,11 +73,12 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
 
         } else {
           if ($_POST['mdp'] == $_POST['confirmation']) {
-            $minuscule = preg_match("/[a-z]+/", $_POST["mdp"]);
-            $majuscule = preg_match("/[A-Z]+/", $_POST["mdp"]);
-            $chiffre = preg_match("/[0-9]+/", $_POST["mdp"]);
+            $minuscule = preg_match("#[a-z]+#", $_POST["mdp"]);
+            $majuscule = preg_match("#[A-Z]+#", $_POST["mdp"]);
+            $chiffre = preg_match("#[0-9]+#", $_POST["mdp"]);
+            $special = preg_match("/[\[^\'£$%^&*()}{@:\'#~?><>,;@\|\\\-=\-_+\-¬\`\]]/", $_POST["mdp"]);
 
-            if($minuscule == 1 || $majuscule == 1 && $chiffre == 1){
+            if($minuscule == 1 || $majuscule == 1 && $chiffre == 1 && $special != 1){
 
               date_default_timezone_set('Europe/Paris');
               $date_creation = date('d/m/Y, H:i:s');

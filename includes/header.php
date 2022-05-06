@@ -100,7 +100,7 @@
               <a class="nav-link" href="bibliotheque.php">Votre bibliothèque</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="ajout_tournoi.php">Tournoi</a>
+              <a class="nav-link" href="liste_tournoi.php">Tournoi</a>
             </li>
             <?php
             if ($admin == 1) {

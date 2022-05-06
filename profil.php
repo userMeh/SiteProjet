@@ -28,6 +28,7 @@
           <div class="col-1"></div>
           <div class="col-4">
             <img src="images/profile.png" class="border border-secondary border border-4 img-fluid">
+            <a class="btn btn-primary" href="generate_pdf.php?compte=<?php echo $_SESSION['compte'] ?>">Export du profil</a>
           </div>
           <div class="col-6">
             <div class="row rounded-pill border border-4 border-secondary">

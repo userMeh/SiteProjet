@@ -16,25 +16,25 @@
 
           <div class="mb-3">
             <label for="pseudo" class="form-label">Pseudo</label>
-            <input type="text" name="pseudo" class="form-control" id="pseudo" placeholder="Votre pseudo" value="<?= isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '' ?>" required>
+            <input type="text" name="pseudo" class="form-control" id="pseudo" placeholder="Votre pseudo" value="" required>
             <div id="pseudoHelp" class="form-text">Entre 3 et 14 caractères.</div>
           </div>
 
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="Votre email" value="<?= isset($_COOKIE['email']) ? $_COOKIE['email'] : '' ?>" required>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Votre email" value="" required>
           </div>
 
           <div class="mb-3">
             <label for="mdp" class="form-label">Mot de passe</label>
-            <input type="password" name="mdp" class="form-control" id="mdp" placeholder="Votre mot de passe">
+            <input type="password" name="mdp" class="form-control" id="mdp" placeholder="Votre mot de passe" required>
             <div id="passwordHelpBlock" class="form-text">
-              Votre mot de passe doit faire entre 8 et 20 caractères de long, contenir des lettres et des chiffres, et pas d'espaces, de caractères spéciaux, ou d'emoji.
+              Votre mot de passe doit faire entre 8 et 20 caractères de long, contenir des lettres et des chiffres, et pas d'espaces ou de caractères spéciaux.
             </div>
 
             <div class="mb-3">
               <label for="confirmation" class="form-label">Confirmation du mot de passe</label>
-              <input type="password" name="confirmation" class="form-control" id="confirmation" placeholder="">
+              <input type="password" name="confirmation" class="form-control" id="confirmation" placeholder="" required>
             </div>
 
             <div class="mb-3">

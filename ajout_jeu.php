@@ -64,19 +64,19 @@
 
             <div class="mb-3">
               <label for="imagePrincipale" class="form-label"><h4>Image principale</h4></label>
-              <input class="form-control" name="image" type="file" accept="image/jpeg">
+              <input class="form-control" name="image" type="file" accept="image/jpeg" required>
             </div>
 
             <div class="row">
               <label for="carousel" class="form-label"><h4>image carousel</h4></label>
               <div class="col-4">
-                <input class="form-control" name="carousel1" type="file" accept="image/jpeg">
+                <input class="form-control" name="carousel1" type="file" accept="image/jpeg" required>
               </div>
               <div class="col-4">
-                <input class="form-control" name="carousel2" type="file" accept="image/jpeg">
+                <input class="form-control" name="carousel2" type="file" accept="image/jpeg" required>
               </div>
               <div class="col-4 mb-4">
-                <input class="form-control" name="carousel3" type="file" accept="image/jpeg">
+                <input class="form-control" name="carousel3" type="file" accept="image/jpeg" required>
               </div>
             </div>
 
