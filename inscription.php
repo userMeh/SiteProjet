@@ -38,10 +38,14 @@
             </div>
 
             <div class="mb-3">
-              <label class="pe-3">Je suis fait de chair et de sang : </label>
+              <label class="pe-3">Je ne suis pas un robot : </label>
               <input type="checkbox" class="btn btn-check" id="verifCaptcha" name="verifCaptcha" value="verifCaptcha" autocomplete="off">
               <label id="btnCheck" class="btn btn-secondary" for="verifCaptcha" data-bs-toggle="modal" data-bs-target="#checkCaptcha" onclick="random()"><i id="check" class=bi-square></i></label>
+            </div>
 
+            <div class="mb-3">
+              <label class="pe-3">Conditions générales d'utilisation : </label>
+              <input type="checkbox" class="form-check-input" id="cgu" name="cgu" autocomplete="off" data-bs-toggle="modal" data-bs-target="#condition">
             </div>
 
             <div class="modal fade" id="checkCaptcha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="checkCaptchaLabel" aria-hidden="true">
@@ -73,7 +77,66 @@
                 </div>
               </div>
             </div>
+
+            <div class="modal fade" id="condition" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="exampleModalLabel">Conditions générales d'utilisation</h5>
+                  </div>
+                  <div class="modal-body text-dark">
+                    <p>Les présentes conditions générales régissent l'utilisation de ce site logic-gaming.online<br>
+                      Ce site appartient et est géré par Etudiant ESGI<br>
+                      En utilisant ce site; vous indiquez que vous avez lu et compris les conditions d'utilisation et que vous acceptez de les respecter en tout temps<br></p>
+                      <p>
+                        <b>Contribuations d'utilisateur</b>
+                        <br>
+                        Les utilisateurs peuvent publier les informations suivantes sur notre site :<br>
+                        Photos<br>
+                        Commentaire du public<br><br>
+                        En affichant publiquement sur notre site, vous acceptez de ne pas agir illégalement ou violer les conditions d'utilisation acceptable énumérées dans ce document.<br>
+                      </p>
+                      <p>
+                        <b>Comptes</b>
+                        <br>
+                        Lorsque vous créez un compte sur notre site, vous acceptez ce qui suit :<br>
+                        1. que vous êtes seul responsable de votre compte et de la écurité et la confidentialité de votre compte, y compris les mots de passe ou renseignements de la nature décilate joints à ce compte, et<br>
+                        2. que tous les renseingmeents personnels que vous nous fournissez par l'entremise de votre compte sont à jour, exacts et véridiques et que vous mettrez à jour vos renseignements personnels s'ils changent.<br>
+
+                        Nous réservons le droit de susprendre ou de résilier votre compte si vous utilisez notre site illégalement ou si vous violez nos conditions d'utilisation acceptable.<br>
+                      </p>
+                      <p>
+                        <b>Limitation de responsabilité</b>
+                        <br>
+                        Etudiant ESGI ou l'un de ses employés sera tenu responsable de tout problème découlant de ce site. Néanmoins, Etudiant ESGI et ses employés ne seront pas tenus responsables de tout problème découlant de toute utilisation irrégulière de ce site.<br>
+                      </p>
+                      <p>
+                        <b>Indemnité</b>
+                        <br>
+                        En tant qu'utilisateur, vous indemnisez par les présentes Etudiant ESGI de toute responsabilité, de tout coût, de toute cause d'action, de tout dommage ou de toute dépense découlant de votre utilisation de ce site ou de votre violation de l'une des dispositions énoncées dans le présent document.<br>
+                      </p>
+                      <p>
+                        <b>Soutenance</b>
+                        <br>
+                        Lors de la soutenance du projet annuel les coordinateurs chargés de nous notés sont dans l'obligation de nous accorder une "bonne note"<br>
+                      </p>
+                      <p>
+                        <b>Contact</b>
+                        <br>
+                        Veuillez communiquer avec nous si vous avez des questions ou des préocupations. Nos coordonnées sont les suivantes :<br>
+                        logic-gaming@gmail.com<br>
+                        242 rue faubourg Saint-Antoine
+                      </p>
+                    </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">J'accepte</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+
 
           <button type="submit" class="btn btn-primary me-2">Valider</button>
           <a type="button" class="btn btn-success" href="connexion.php">Déjà un compte?</a>

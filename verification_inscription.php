@@ -58,6 +58,10 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
       header('location:inscription.php?message='.$message);
       exit;
 
+    } if(!isset($_POST['cgu'])){
+      $message = "Veuillez acceptez les conditions générales d'utilisation";
+      header('location:inscription.php?message='.$message);
+      exit;
     } else {
       if (strlen($_POST['mdp']) >= 8 && strlen($_POST['mdp']) <= 20){
         $doublon=$bdd->prepare('SELECT pseudo FROM UTILISATEURS WHERE email=?');
@@ -132,7 +136,7 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
     exit;
   }
 }
-$message="Ca a merdé";
+$message="Y'a eu un probleme";
 header('location:inscription.php?message='.$message);
 exit;
 

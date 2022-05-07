@@ -27,8 +27,13 @@
         <div class="row">
           <div class="col-1"></div>
           <div class="col-4">
-            <img src="images/profile.png" class="border border-secondary border border-4 img-fluid">
-            <a class="btn btn-primary" href="generate_pdf.php?compte=<?php echo $_SESSION['compte'] ?>">Export du profil</a>
+            <div class="image-avatar">
+              <?php include "avatar.php" ?>
+            </div>
+            <?php if(!isset($_GET['visit'])){
+              echo'<a class="btn btn-primary me-3" href="select_avatar.php?compte='.$_SESSION['compte'].'">Modifier son avatar</a>';
+              echo'<a class="btn btn-primary" href="generate_pdf.php?compte='.$_SESSION['compte'].'">Export du profil</a>';
+            } ?>
           </div>
           <div class="col-6">
             <div class="row rounded-pill border border-4 border-secondary">
@@ -40,10 +45,19 @@
               $query = $bdd -> query('SELECT status FROM UTILISATEURS WHERE email="'.$compte.'"');
               $status = $query -> fetch();
               ?>
-              <form action="verification_modification.php" method="post">
-                <textarea class="form-control bg-dark text-light border border-4 border-secondary" id="status" name="status" rows="10"><?php echo $status['status'] ?></textarea>
-                <input type="submit" class="btn btn-primary" value="Sauvegarder"></input>
-              </form>
+              <?php
+              if(isset($_GET['visit'])){
+                echo'<p>'.$status['status'].'</p>';
+              } else {
+                echo
+                '
+                <form action="verification_modification.php" method="post">
+                  <textarea class="form-control bg-dark text-light border border-4 border-secondary" id="status" name="status" rows="10">'.$status['status'].'</textarea>
+                  <input type="submit" class="btn btn-primary" value="Sauvegarder"></input>
+                </form>
+                ';
+              }
+              ?>
             </div>
           </div>
         </div>
