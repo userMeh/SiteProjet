@@ -1,10 +1,40 @@
 <?php
 
-echo $_POST['duree'];
 
 ini_set('display_errors', 1);
 
 include ('includes/bdd.php');
+
+$tournoi = str_replace("-"," ",$_GET['delete']);               //Pour remettre les espaces a la place des - pour les retrouver dans la bdd
+
+
+
+if(isset($_GET['delete'])){
+
+  $tournoi = str_replace("-"," ",$_GET['delete']);               //Pour remettre les espaces a la place des - pour les retrouver dans la bdd
+
+  $query = $bdd->query('SELECT id FROM TOURNOI WHERE nom_du_jeu="'.$tournoi.'"');
+  $id = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+  var_dump($id);
+
+
+  $bdd->query('DELETE FROM PARTICIPATION WHERE id="'.$id[0].'"');   //Pour supprimer les donnees de la table GENRE_JEUX
+  $bdd->query('DELETE FROM TOURNOI WHERE id="'.$id[0].'"');              //sinon on peut pas a cause de la cle etrangere
+
+  unlink('imagetournoi/'.$tournoi.'0.jpg');
+
+  $message="succès suppression jeu";
+  header('location:liste_tournoi.php?message='.$message);
+  exit;
+
+}
+
+
+
+
+
+
 
 $doublon=$bdd->prepare('SELECT nom_du_jeu FROM TOURNOI WHERE nom_du_jeu=?');
 $doublon->execute([
