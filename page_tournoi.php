@@ -124,6 +124,34 @@
 
             </div>
           </div>
+            <?php
+          $query = $bdd -> query('SELECT date_de_depart FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
+          $date_de_debut = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+          $date = time();
+          $date_de_debut[0] = strtotime($date_de_debut[0]);
+          $date_de_fin[0] = strtotime($date_de_fin[0]);
+
+
+
+          $date_now= strftime('%d %B %Y', $date);
+          $date_de_debut[0] = strftime('%d %B %Y', $date_de_debut[0]);
+          $duree[0] = strftime('%d %B %Y', $date_de_fin[0]);
+
+
+           if ($date_now > $date_de_fin[0]){
+             echo "<a> Statue </a>";
+             echo '<button type="button" style="background: #663300">Terminé</button> ';
+           }
+           if ($date_now < $date_de_debut[0]){
+             echo "<a> Statue </a>";
+             echo '<button type="button" style="background: #663300">En Préparation</button> ';
+           } else {
+             echo "<a> Statue </a>";
+             echo '<button type="button" style="background: #663300">En Cours</button> ';
+           }
+
+          ?>
         </div>
       </div>
 
