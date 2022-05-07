@@ -34,7 +34,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column; 
+	flex-direction: column;
 	box-shadow: 3px 3px 14px rgba(0, 0, 0, .7),
 	-3px -3px 14px rgba(0, 0, 0, .7);
 	border-radius: 20px;
@@ -49,7 +49,7 @@ body{
 	align-items: center;
 }
 .fpart{
-	background:url('dump/face.png');
+	background:url('parts/face.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
@@ -73,31 +73,31 @@ body{
 	text-shadow: 1px 1px 4px rgba(0, 0, 0, .7);
 }
 .hpart{
-	background:url('dump/hair.png');
+	background:url('parts/hair.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
 }
 .epart{
-	background:url('dump/eyes.png');
+	background:url('parts/eyes.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
 }
 .ebpart{
-	background:url('dump/ebrow.png');
+	background:url('parts/ebrow.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
 }
 .lpart{
-	background:url('dump/lips.png');
+	background:url('parts/lips.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
 }
 .bpart{
-	background:url('dump/beard.png');
+	background:url('parts/beard.png');
 	background-size: cover;
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
@@ -108,7 +108,7 @@ body{
 	width: 820px;
 	background: transparent;
 	bottom: 1.7%;
-	left: 20%; 
+	left: 20%;
 }
 #fface{
 	position: fixed;
@@ -230,75 +230,75 @@ body{
 	transition: .7s;
 }
 .fbeard1{
-	background: url('dump/beard/beard1.png');
+	background: url('parts/beard/beard1.png');
 	transition: .7s;
 }
 .fbeard2{
-	background: url('dump/beard/beard2.png');
+	background: url('parts/beard/beard2.png');
 	transition: .7s;
 }
 .fbeard3{
-	background: url('dump/beard/beard3.png');
+	background: url('parts/beard/beard3.png');
 	transition: .7s;
 }
 .flips1{
-	background: url('dump/lips/lips1.png');
+	background: url('parts/lips/lips1.png');
 	transition: .7s;
 }
 .flips2{
-	background: url('dump/lips/lips2.png');
+	background: url('parts/lips/lips2.png');
 	transition: .7s;
 }
 .flips3{
-	background: url('dump/lips/lips3.png');
+	background: url('parts/lips/lips3.png');
 	transition: .7s;
 }
 .febrow1{
-	background: url('dump/ebrow/ebrow1.png');
+	background: url('parts/ebrow/ebrow1.png');
 	transition: .7s;
 }
 .febrow2{
-	background: url('dump/ebrow/ebrow2.png');
+	background: url('parts/ebrow/ebrow2.png');
 	transition: .7s;
 }
 .febrow3{
-	background: url('dump/ebrow/ebrow3.png');
+	background: url('parts/ebrow/ebrow3.png');
 	transition: .7s;
 }
 .feyes1{
-	background: url('dump/eyes/eyes1.png');
+	background: url('parts/eyes/eyes1.png');
 	transition: .7s;
 }
 .feyes2{
-	background: url('dump/eyes/eyes2.png');
+	background: url('parts/eyes/eyes2.png');
 	transition: .7s;
 }
 .feyes3{
-	background: url('dump/eyes/eyes3.png');
+	background: url('parts/eyes/eyes3.png');
 	transition: .7s;
 }
 .fhair1{
-	background: url('dump/hair/hair1.png');
+	background: url('parts/hair/hair1.png');
 	transition: .7s;
 }
 .fhair2{
-	background: url('dump/hair/hair2.png');
+	background: url('parts/hair/hair2.png');
 	transition: .7s;
 }
 .fhair3{
-	background: url('dump/hair/hair3.png');
+	background: url('parts/hair/hair3.png');
 	transition: .7s;
 }
 .fface1{
-	background: url('dump/faces/face1.png');
+	background: url('parts/faces/face1.png');
 	transition: .7s;
 }
 .fface2{
-	background: url('dump/faces/face2.png');
+	background: url('parts/faces/face2.png');
 	transition: .7s;
 }
 .fface3{
-	background: url('dump/faces/face3.png');
+	background: url('parts/faces/face3.png');
 	transition: .7s;
 }
 .colors{
@@ -307,14 +307,14 @@ body{
 	width: 250px;
 	backdrop-filter: blur(2px) grayscale(100%);
 	right: .7%;
-	top: 3%; 
+	top: 3%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	box-shadow: 3px 3px 14px rgba(0, 0, 0, .8),
 	-3px -3px 14px rgba(0, 0, 0, .7);
-	border-radius: 20px; 
+	border-radius: 20px;
 }
 .mbody{
 	position: absolute;
@@ -406,7 +406,7 @@ body{
 	left: -38%;
 	top: 16%;
 	height: 390px;
-	width: 590px;	
+	width: 590px;
 }
 .hair2{
 	position: absolute;
@@ -420,7 +420,7 @@ body{
 	height: 452px;
 	width: 690px;
 	top: -9%;
-	left: -25.8%;	
+	left: -25.8%;
 }
 .eyes1{
 	position: absolute;
@@ -449,7 +449,7 @@ body{
 }
 .lips3{
 	position: absolute;
-	top: -47%;	
+	top: -47%;
 }
 .beard2{
 	position: absolute;
