@@ -143,7 +143,7 @@
                 <?php
                 $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
                 $participant_max = $query -> fetchAll(PDO::FETCH_COLUMN);
-                  echo'<b>participant maximun</b>:'.$participant_max[0].'';
+                  echo'<b>participant maximun : '.$participant_max[0].'</b>';
                 ?>
 
 
