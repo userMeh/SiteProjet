@@ -28,30 +28,6 @@
     }
   }
 
-
-  /*
-  $bdd -> query('UPDATE JEUX SET nb_vues = nb_vues + 1 WHERE nom = "'.$jeu.'"'); //Comptabilise la visite
-  if (isset($_SESSION['compte'])) {
-    $email = $_SESSION['compte'];
-
-    $query = $bdd -> query('SELECT id FROM BIBLIOTHEQUE WHERE email="'.$email.'"');
-    $id = $query -> fetchAll(PDO::FETCH_COLUMN);
-    if (!$id) {
-      $query = $bdd -> query('SELECT id FROM BIBLIOTHEQUE ORDER BY id DESC');
-      $incr = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-      $prepare = $bdd -> prepare('INSERT INTO BIBLIOTHEQUE(id, nombre_jeux, email) VALUES(:id, :nombre_jeux, :email)');
-      $prepare -> execute([
-        'id' => $incr[0]+1,
-        'nombre_jeux' => 0,
-        'email' => $email
-      ]);
-
-      $id = $incr[0]+1;
-    }
-    $query = $bdd -> query('SELECT nom FROM FAVORI WHERE id='.$id[0].' AND nom="'.$jeu.'"');
-    $favorite = $query -> fetchAll(PDO::FETCH_COLUMN);
-  } */
   ?>
   <title> <?php echo $tournoi ?> </title>
 </head>
@@ -150,6 +126,11 @@
 
             </div>
           </div>
+
+          <?php if (): ?>
+
+          <?php endif; ?>
+
         </div>
       </div>
 
