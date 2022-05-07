@@ -110,6 +110,8 @@ if(isset($_GET['modify'])){
   $bdd -> query('DELETE FROM COMMENTAIRE WHERE id_poste=(SELECT id FROM POSTE WHERE email=(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'"))');
   $bdd -> query('DELETE FROM POSTE WHERE email=(SELECT email FROM UTILISATEURS WHERE pseudo="'.$_GET['delete'].'")');
 
+  $bdd -> query('DELETE FROM AVATAR WHERE email="'.$_GET['delete'].'"');
+
   $delete = $bdd->prepare('DELETE FROM UTILISATEURS WHERE pseudo=:pseudo');
   $delete -> execute([
     'pseudo'=>$_GET['delete']

@@ -100,6 +100,26 @@ if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
                 'cle_verif' => $vCle
               ]);
 
+              $query = $bdd -> query('SELECT id FROM AVATAR ORDER BY id DESC');
+              $verif = $query -> fetchAll(PDO::FETCH_COLUMN);
+              if (!$verif) {
+                $id = 0;
+              } else {
+                $id = $verif[0]+1;
+              }
+
+              $request=$bdd->prepare('INSERT INTO AVATAR(id, email, id_yeux, id_barbe, id_sourcil, id_cheveux, id_bouche, id_visage) VALUES (:id, :email, :id_yeux, :id_barbe, :id_sourcil, :id_cheveux, :id_bouche, :id_visage)');
+              $result=$request->execute([
+                'id' => $id,
+                'email' => $_POST['email'],
+                'id_yeux' => 1,
+                'id_sourcil' => 1,
+                'id_cheveux' => 1
+                'id_bouche' => 1,
+                'id_sourcil' => 1,
+                'id_visage' => 1
+              ]);
+
               include "includes/mail.php";
 
               if($result){
