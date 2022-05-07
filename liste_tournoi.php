@@ -1,3 +1,4 @@
+<?php setlocale(LC_TIME, ['fr', 'fra', 'fr_FR']); ?>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -38,11 +39,14 @@
         $query = $bdd -> query('SELECT duree FROM TOURNOI');
         $date_fin = $query -> fetchAll(PDO::FETCH_COLUMN);
 
+
         $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI');
         $participant_max = $query -> fetchAll(PDO::FETCH_COLUMN);
 
         $query = $bdd -> query('SELECT participant_actuel FROM TOURNOI');
         $participant = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+
 
         if ($count_tournoi == 0) {
           echo '<div class="my-5">
@@ -50,6 +54,14 @@
           </div>';
         } else {
           for ($i=0; $i < $count_tournoi; $i++) {
+
+            $date_de_depart[$i] = strtotime($date[$i]);
+            $date_de_fin[$i] = strtotime($date_fin[$i]);
+
+
+            $date_fin[$i]= strftime('%d %B %Y', $date_de_fin[$i]);
+            $date_de_debut[$i] = strftime('%d %B %Y', $date_de_depart[$i]);
+
 
             $query = $bdd -> prepare('SELECT SUBSTRING(description,1,450) FROM TOURNOI WHERE nom_du_jeu=:nom_du_jeu');
             $req = $query -> execute([
@@ -99,7 +111,7 @@
             </div>
             </div>
 
-            <p>Les récompenses : '.$recompense[$i].'   |   début le '.$date[$i].'  | fin le '.$date_fin[$i].' |  <img src="images/views-light.png" style="width: 20px;"> '.$participant[$i].'/'.$participant_max[$i].'</p>
+            <p>Les récompenses : '.$recompense[$i].'   |   début le '.$date_de_debut[$i].'  | fin le '.$date_fin[$i].' |  <img src="images/views-light.png" style="width: 20px;"> '.$participant[$i].'/'.$participant_max[$i].'</p>
             <p>'.$regle[0].'...</p>
 
             </div>
