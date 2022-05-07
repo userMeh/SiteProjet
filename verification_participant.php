@@ -12,11 +12,27 @@ if (isset($_GET['participe'])) {
   $query = $bdd -> query('SELECT nom_du_jeu FROM TOURNOI WHERE id="'.$id.'"');
   $tournoi = $query -> fetch();
 
-  $prepare = $bdd -> prepare('INSERT INTO PARTICIPATION(id, email) VALUES(:id, :email)');
-  $prepare -> execute([
-    'id' => $id,
-    'email' => $email
-    ]);
+    $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI WHERE id="'.$id.'"');
+    $participant_max = $query -> fetch();
+    $query = $bdd -> query('SELECT participant_actuel FROM TOURNOI WHERE id="'.$id.'"');
+    $participant = $query -> fetch();
+
+
+    if ($participant < $participant_max) {
+      $prepare = $bdd -> prepare('INSERT INTO PARTICIPATION(id, email) VALUES(:id, :email)');
+      $prepare -> execute([
+        'id' => $id,
+        'email' => $email
+        ]);
+
+        $query = $bdd -> query('UPDATE TOURNOI SET participant_actuel= participant_actuel+1 WHERE id="'.$id.'"');
+
+    }   else {
+      header('location:page_tournoi.php?jeu='.$tournoi['nom_du_jeu']);
+      exit;
+    }
+
+
     if(!file_exists("logs/visite_tournoi/")){
       mkdir("logs/visite_tournoi/$compte", 0777,True);
     }
@@ -42,6 +58,8 @@ if (isset($_GET['participe'])) {
 
   $query = $bdd -> query('SELECT nom_du_jeu FROM TOURNOI WHERE id="'.$id.'"');
   $tournoi = $query -> fetch();
+
+  $query = $bdd -> query('UPDATE TOURNOI SET participant_actuel= participant_actuel-1 WHERE id="'.$id.'"');
 
 
   $query = $bdd -> query('DELETE FROM PARTICIPATION WHERE id='.$id.' AND email="'.$email.'"');
