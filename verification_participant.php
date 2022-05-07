@@ -1,6 +1,8 @@
 <?php
 include "includes/bdd.php";
 
+session_start();
+$compte = $_SESSION['compte'];
 
 if (isset($_GET['participe'])) {
   $get = explode("/", $_GET['participe']);
@@ -8,8 +10,7 @@ if (isset($_GET['participe'])) {
   $id = next($get);
 
   $query = $bdd -> query('SELECT nom_du_jeu FROM TOURNOI WHERE id="'.$id.'"');
-  $tournoi = $query -> fetchAll(PDO::FETCH_COLUMN);
-
+  $tournoi = $query -> fetch();
 
   $prepare = $bdd -> prepare('INSERT INTO PARTICIPATION(id, email) VALUES(:id, :email)');
   $prepare -> execute([
@@ -23,16 +24,16 @@ if (isset($_GET['participe'])) {
     $logs = fopen("logs/visite_tournoi/$compte.txt", "a+");
     date_default_timezone_set('Europe/Paris');
     $date = date('d/m/Y à H:i:s');
-  $txt = "$email a été ajouté à la participation du tournoi $tournoi le $date \n";
+    $tournoi_log = $tournoi['nom_du_jeu'];
+    $txt = "$email a été ajouté à la participation du tournoi $tournoi_log le $date\n";
 
     fwrite($logs, $txt);
     fclose($logs);
 
-  header('location:page_tournoi.php?jeu='.$tournoi.'');
+  header('location:page_tournoi.php?jeu='.$tournoi['nom_du_jeu'].'');
+  exit;
 
-
-
-} else(isset($_GET['leave'])) {
+} else if (isset($_GET['leave'])) {
 
 
   $get = explode("/", $_GET['leave']);
@@ -40,7 +41,7 @@ if (isset($_GET['participe'])) {
   $id = next($get);
 
   $query = $bdd -> query('SELECT nom_du_jeu FROM TOURNOI WHERE id="'.$id.'"');
-  $tournoi = $query -> fetchAll(PDO::FETCH_COLUMN);
+  $tournoi = $query -> fetch();
 
 
   $query = $bdd -> query('DELETE FROM PARTICIPATION WHERE id='.$id.' AND email="'.$email.'"');
@@ -53,15 +54,16 @@ if (isset($_GET['participe'])) {
   $logs = fopen("logs/visite_tournoi/$email.txt", "a+");
   date_default_timezone_set('Europe/Paris');
   $date = date('d/m/Y à H:i:s');
-  $txt = "$email a retiré sa participation au $tournoi le $date\n";
+  $tournoi_log = $tournoi['nom_du_jeu'];
+  $txt = "$email a retiré sa participation au $tournoi_log le $date\n";
   fwrite($logs, $txt);
   fclose($logs);
 
-  header('location:page_tournoi.php?jeu='.$tournoi.'');
-
-
+  header('location:page_tournoi.php?jeu='.$tournoi['nom_du_jeu']);
+  exit;
 
 } else {
   header('location:index.php');
+  exit;
 }
 ?>

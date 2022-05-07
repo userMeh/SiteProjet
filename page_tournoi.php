@@ -95,7 +95,6 @@
                  <div class="row">
                   <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
 
-
                     <?php
                     if (isset($_SESSION['compte'])){
                       $query = $bdd -> query('SELECT id FROM TOURNOI WHERE nom_du_jeu="'.$tournoi.'"');
@@ -103,8 +102,7 @@
                       $query = $bdd -> query('SELECT email FROM PARTICIPATION WHERE id='.$id[0].' AND email="'.$_SESSION['compte'].'"');
                       $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-
-                      if (isset($participants)) {
+                      if (count($participants) == 0) {
                         echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Rejoindre</button></a>';
                       } else {
                         echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Quitter</button></a>';
@@ -126,11 +124,6 @@
 
             </div>
           </div>
-
-          <?php if (): ?>
-
-          <?php endif; ?>
-
         </div>
       </div>
 
