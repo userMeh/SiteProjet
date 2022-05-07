@@ -28,19 +28,6 @@
     }
   }
 
-  $query = $bdd -> query('SELECT id FROM TOURNOI WHERE nom_du_jeu="'.$tournoi.'"');
-  $id = $query -> fetchAll(PDO::FETCH_COLUMN);
-  $query = $bdd -> query('SELECT email FROM PARTICIPATION WHERE id='.$id[0].' AND email="'.$_SESSION['compte'].'"');
-  $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
-  $query = $bdd -> query('SELECT count(id) FROM PARTICIPATION WHERE id='.$id.' AND email="'.$_SESSION['compte'].'"');
-  $participation = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-
-  var_dump($participation);
-  exit;
-
-
-
 
   /*
   $bdd -> query('UPDATE JEUX SET nb_vues = nb_vues + 1 WHERE nom = "'.$jeu.'"'); //Comptabilise la visite
@@ -105,6 +92,8 @@
 
           <div class="col-4">
             <div class="row">
+
+
 
               <p>
                 <br><br>
