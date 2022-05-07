@@ -128,6 +128,12 @@
           $query = $bdd -> query('SELECT date_de_depart FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
           $date_de_debut = $query -> fetchAll(PDO::FETCH_COLUMN);
 
+          $query = $bdd -> query('SELECT duree FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
+          $date_de_fin = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+
+
+
           $date = time();
           $date_de_debut[0] = strtotime($date_de_debut[0]);
           $date_de_fin[0] = strtotime($date_de_fin[0]);
