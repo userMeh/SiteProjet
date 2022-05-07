@@ -28,6 +28,20 @@
     }
   }
 
+  $query = $bdd -> query('SELECT id FROM TOURNOI WHERE nom_du_jeu="'.$tournoi.'"');
+  $id = $query -> fetchAll(PDO::FETCH_COLUMN);
+  $query = $bdd -> query('SELECT email FROM PARTICIPATION WHERE id='.$id[0].' AND email="'.$_SESSION['compte'].'"');
+  $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
+  $query = $bdd -> query('SELECT count(id) FROM PARTICIPATION WHERE id='.$id.' AND email="'.$_SESSION['compte'].'"');
+  $participation = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+
+  var_dump($participation);
+  exit;
+
+
+
+
   /*
   $bdd -> query('UPDATE JEUX SET nb_vues = nb_vues + 1 WHERE nom = "'.$jeu.'"'); //Comptabilise la visite
   if (isset($_SESSION['compte'])) {
@@ -60,8 +74,8 @@
     <?php
     if(isset($_SESSION['compte'])){
       $compte = $_SESSION['compte'];
-      if(!file_exists("logs/visite_tournoi")){
-        mkdir("logs/visite_tournoi", 0777);
+      if(!file_exists("logs/visite_tournoi/")){
+        mkdir("logs/visite_tournoi/$compte", 0777,True);
       }
 
       $logs = fopen("logs/visite_tournoi/$compte.txt", "a+");
@@ -112,13 +126,35 @@
                   echo $participant[0];
                 ?>
 
-                <br><br><br>
 
-                <b>participant maximun</b>:
+                 <div class="row">
+                  <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
+
+
+                    <?php
+                    if (isset($_SESSION['compte'])){
+                      $query = $bdd -> query('SELECT id FROM TOURNOI WHERE nom_du_jeu="'.$tournoi.'"');
+                      $id = $query -> fetchAll(PDO::FETCH_COLUMN);
+                      $query = $bdd -> query('SELECT email FROM PARTICIPATION WHERE id='.$id[0].' AND email="'.$_SESSION['compte'].'"');
+                      $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
+
+
+                      if (isset($participants)) {
+                        echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Rejoindre</button></a>';
+                      } else {
+                        echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Quitter</button></a>';
+                      }
+                    } else {
+                      echo '<a class="btn btn-primary mt-3" href="connexion.php">Se connecter</a><br><br>';
+                    }
+                    ?>
+                  </div>
+                </div>
+
                 <?php
                 $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
                 $participant_max = $query -> fetchAll(PDO::FETCH_COLUMN);
-                  echo $participant_max[0];
+                  echo'<b>participant maximun</b>:'.$participant_max[0].'';
                 ?>
 
 
@@ -130,11 +166,8 @@
 
       <hr class="mt-3">
 
-      <div class="row mt-5">
-        <h2 class="col-12"><b>Images de <?php echo $tournoi?></b> :</h2>
-      </div>
     <div class="container">
-      <h1>Regle du tournoi<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-synopsis">Editer</button></h1>
+      <h1>Regle du tournoi</h1>
       <p>
 
         <?php
@@ -144,8 +177,12 @@
         ?>
 
       </p>
-
+      <?php  if ($admin == 1) { ?>
+     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edition-synopsis">Editer</button>
+   <?php } ?>
   </main>
+
+  <?php  if ($admin == 1) { ?>
   <div class="modal fade popup" id="edition-synopsis" tabindex="-1" aria-labelledby="editionLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -170,7 +207,9 @@
       </div>
     </div>
   </div>
-
+</div>
+</div>
+<?php } ?>
   <?php include "includes/footer.php" ?>
 
 
