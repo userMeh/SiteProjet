@@ -93,7 +93,7 @@
 
 
                  <div class="row">
-                  <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
+                  <div class="pt-4 d-flex justify-content-center" style="border-left:solid #3f3f3f">
 
                     <?php
                     if (isset($_SESSION['compte'])){
@@ -103,9 +103,9 @@
                       $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
 
                       if (count($participants) == 0) {
-                        echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Rejoindre</button></a>';
+                        echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button type="button" class="btn btn-info">Rejoindre</button></a><br><br>';
                       } else {
-                        echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Quitter</button></a>';
+                        echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button type="button" class="btn btn-info">Quitter</button></a><br><br>';
                       }
                     } else {
                       echo '<a class="btn btn-primary mt-3" href="connexion.php">Se connecter</a><br><br>';
@@ -114,7 +114,9 @@
                   </div>
                 </div>
 
+
                 <?php
+
                 $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
                 $participant_max = $query -> fetchAll(PDO::FETCH_COLUMN);
                   echo'<b>participant maximun : '.$participant_max[0].'</b>';
