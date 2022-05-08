@@ -34,13 +34,13 @@
 
       <div class="col-md-1"></div>
       <div class="row">
-        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['compte'])){
+        <a type="button" class="btn btn-secondary col mx-3 mt-3" <?php if(isset($_SESSION['compte'])){
           echo 'href="profil.php">Profil</a>';
         } else {
           echo 'href="connexion.php">Connexion</a>';
         }
         ?>
-        <a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" <?php if(isset($_SESSION['compte'])){
+        <a type="button" class="btn btn-secondary col mx-3 mt-3" <?php if(isset($_SESSION['compte'])){
           echo 'href="deconnexion.php">Deconnexion</a>';
         } else {
           echo 'href="inscription.php">Inscription</a>';
@@ -48,7 +48,8 @@
         ?>
         <?php
         if ($admin == 1) {
-          echo '<a type="button" class="btn btn-secondary col-4 col-md-3 mt-3 mx-3" href="ajout_jeu.php">Ajouter un jeu</a>';
+          echo '<a type="button" class="btn btn-secondary col mx-3 mt-3" href="ajout_jeu.php">Ajouter un jeu</a>';
+          echo '<a type="button" class="btn btn-secondary col mx-3 mt-3" href="ajout_tournoi.php">Ajouter un tournoi</a>';
         }
         ?>
       </div>

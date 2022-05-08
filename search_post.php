@@ -1,6 +1,6 @@
 <?php
 
-include "bdd.php";
+include "includes/bdd.php";
 
 $search = isset($_GET['search']) ? $_GET['search'] : NULL;
 $user = isset($_GET['session']) ? $_GET['session'] : NULL;
@@ -81,8 +81,6 @@ foreach (array_reverse($postes) as $poste ) {
 
   $query = $bdd -> query('SELECT pseudo FROM UTILISATEURS,(SELECT email FROM POSTE WHERE tag IN (SELECT nom FROM FAVORI WHERE id=(SELECT id FROM BIBLIOTHEQUE WHERE email="'.$user.'"))OR tag="0") AS meh WHERE UTILISATEURS.email=meh.email');
   $auteur = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-
 
   echo'
   <div class="d-flex justify-content-center mb-5">

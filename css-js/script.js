@@ -242,15 +242,22 @@ function like() {
     likeButton.style = "color:none; font-size:2rem; transition:0.5s";
     logsLikeDislike('retiré son like');
     numberLike = likeButton.innerHTML;
+    likeButton.innerHTML = parseInt(numberLike)-1;
 
   } else {
     likeButton.classList = "bi bi-hand-thumbs-up-fill mx-3";
     likeButton.style = "color:blue; font-size:2rem; transition:0.5s";
     logsLikeDislike('like');
+    numberLike = likeButton.innerHTML;
+    likeButton.innerHTML = parseInt(numberLike)+1;
 
     const dislikeButton = document.getElementById('dislike');
-    dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
-    dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
+    if (dislikeButton.classList == "bi bi-hand-thumbs-down-fill mx-3") {
+      dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
+      dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
+      numberDislike = dislikeButton.innerHTML;
+      dislikeButton.innerHTML = parseInt(numberDislike)-1;
+    }
   }
 }
 
@@ -260,16 +267,24 @@ function dislike() {
     dislikeButton.classList = "bi bi-hand-thumbs-down mx-3";
     dislikeButton.style = "color:none; font-size:2rem; transition:0.5s";
     logsLikeDislike('retiré son dislike');
-    numberDislike = dislike
+    numberDislike = dislikeButton.innerHTML;
+    dislikeButton.innerHTML = parseInt(numberDislike)-1;
 
   } else {
     dislikeButton.classList = "bi bi-hand-thumbs-down-fill mx-3";
     dislikeButton.style = "color:red; font-size:2rem; transition:0.5s";
     logsLikeDislike('dislike');
+    numberDislike = dislikeButton.innerHTML;
+    dislikeButton.innerHTML = parseInt(numberDislike)+1;
 
     const likeButton = document.getElementById('like');
-    likeButton.classList = "bi bi-hand-thumbs-up mx-3";
-    likeButton.style = "color:none; font-size:2rem; transition:0.5s";
+
+    if (likeButton.classList == "bi bi-hand-thumbs-up-fill mx-3") {
+      likeButton.classList = "bi bi-hand-thumbs-up mx-3";
+      likeButton.style = "color:none; font-size:2rem; transition:0.5s";
+      numberLike = likeButton.innerHTML;
+      likeButton.innerHTML = parseInt(numberLike)-1;
+    }
   }
 }
 
@@ -284,9 +299,13 @@ function verifLike() {
   request.onreadystatechange = function() {
     if (request.readyState===XMLHttpRequest.DONE) {
       if (parseInt(request.responseText) === 1) {
-        like();
+        const likeButton = document.getElementById('like');
+        likeButton.classList = "bi bi-hand-thumbs-up-fill mx-3";
+        likeButton.style = "color:blue; font-size:2rem; transition:0.5s";
       } else if (parseInt(request.responseText) === 2){
-        dislike();
+        const dislikeButton = document.getElementById('dislike');
+        dislikeButton.classList = "bi bi-hand-thumbs-down-fill mx-3";
+        dislikeButton.style = "color:red; font-size:2rem; transition:0.5s";
       }
     }
   };
@@ -310,7 +329,7 @@ function searchPost(info) {
 
   const compte = document.getElementById('compte').innerHTML;
   const searchInput = document.getElementById('searchPost');
-  let url = 'includes/search_post.php?session=' + compte;
+  let url = 'search_post.php?session=' + compte;
 
   if (typeof info !== 'undefined') {
     url += '&search=' + info;
