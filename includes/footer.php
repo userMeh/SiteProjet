@@ -1,3 +1,3 @@
 <div class="container">
-  <h4>© Copyright</h4>
+  <h4>© Logic-Gaming</h4>
 </div>

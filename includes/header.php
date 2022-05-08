@@ -114,9 +114,6 @@
             <li class="nav-item">
               <a class="nav-link" href="forum.php">Forum</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="avatar/test.php">TEST</a>
-            </li>
           </ul>
           <span>
             <a id="lightDark" type="button" class="btn btn-light" onclick="switchMode()"><i id="lightDark-icon" class="bi-sun light"></i></a>
