@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 include ('includes/bdd.php');
 
-$tournoi = str_replace("-"," ",$_GET['delete']);               //Pour remettre les espaces a la place des - pour les retrouver dans la bdd
+
 
 
 
@@ -33,9 +33,6 @@ if(isset($_GET['delete'])){
 
 
 
-
-
-
 $doublon=$bdd->prepare('SELECT nom_du_jeu FROM TOURNOI WHERE nom_du_jeu=?');
 $doublon->execute([
   $_POST['nom_du_jeux'],
@@ -54,6 +51,7 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
     exit;
   }
 
+
     $uploads = 'imagetournoi';
 
     if(!file_exists($uploads)){
@@ -67,7 +65,7 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
     $destination = $uploads . '/' . $imagePrincipale;
     move_uploaded_file($_FILES['imagePrincipale']['tmp_name'], $destination);
 
-    var_dump($_FILES);
+
 
 
 
@@ -84,6 +82,7 @@ if(count($result) != 0){      //Pour voir si le tableau est pas vide
       'recompense' => $_POST['recompense']
     ]);
 
+    imagedestroy($imagePrincipale);
 
 
   if($result){
