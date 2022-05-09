@@ -76,11 +76,8 @@
                 <b>Date de fin</b>:
                 <?php
                 $query = $bdd -> query('SELECT duree FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
-                $date = $query -> fetchAll(PDO::FETCH_COLUMN);
-                $liste = 0;
-                include "includes/date.php";
+                $date_de_fin = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-                echo ''.$jour.' '.$mois.' '.$annee.'';
                 ?>
 
                 <br><br><br>
@@ -93,7 +90,8 @@
 
 
                  <div class="row">
-                  <div class="pt-4 d-flex justify-content-center" style="border-left:solid #3f3f3f">
+                  <div class="col-6 pt-4" style="border-left:solid #3f3f3f">
+
 
                     <?php
                     if (isset($_SESSION['compte'])){
@@ -102,10 +100,11 @@
                       $query = $bdd -> query('SELECT email FROM PARTICIPATION WHERE id='.$id[0].' AND email="'.$_SESSION['compte'].'"');
                       $participants = $query -> fetchAll(PDO::FETCH_COLUMN);
 
-                      if (count($participants) == 0) {
-                        echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button type="button" class="btn btn-info">Rejoindre</button></a><br><br>';
+
+                      if (isset($participants)) {
+                        echo '<a href="verification_participant.php?participe='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Rejoindre</button></a>';
                       } else {
-                        echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button type="button" class="btn btn-info">Quitter</button></a><br><br>';
+                        echo '<a href="verification_participant.php?leave='.$compte.'/'.$id[0].'"><button style="font-size:15px; background:#3f3f3f;">Quitter</button></a>';
                       }
                     } else {
                       echo '<a class="btn btn-primary mt-3" href="connexion.php">Se connecter</a><br><br>';
@@ -114,9 +113,7 @@
                   </div>
                 </div>
 
-
                 <?php
-
                 $query = $bdd -> query('SELECT nombre_participant FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
                 $participant_max = $query -> fetchAll(PDO::FETCH_COLUMN);
                   echo'<b>participant maximun : '.$participant_max[0].'</b>';
@@ -126,15 +123,9 @@
 
             </div>
           </div>
-            <?php
+          <?php
           $query = $bdd -> query('SELECT date_de_depart FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
           $date_de_debut = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-          $query = $bdd -> query('SELECT duree FROM TOURNOI WHERE nom_du_jeu= "'. $tournoi .'"');
-          $date_de_fin = $query -> fetchAll(PDO::FETCH_COLUMN);
-
-
-
 
           $date = time();
           $date_de_debut[0] = strtotime($date_de_debut[0]);
@@ -160,6 +151,7 @@
            }
 
           ?>
+
         </div>
       </div>
 
