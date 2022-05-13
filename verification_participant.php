@@ -4,10 +4,18 @@ include "includes/bdd.php";
 session_start();
 $compte = $_SESSION['compte'];
 
+var_dump($_GET);
+
+
+
 if (isset($_GET['participe'])) {
   $get = explode("/", $_GET['participe']);
   $email = current($get);
   $id = next($get);
+
+  var_dump($email);
+  var_dump($id);
+
 
   $query = $bdd -> query('SELECT nom_du_jeu FROM TOURNOI WHERE id="'.$id.'"');
   $tournoi = $query -> fetch();
@@ -18,12 +26,15 @@ if (isset($_GET['participe'])) {
     $participant = $query -> fetch();
 
 
-    if ($participant < $participant_max) {
+
+
+    if ($participant[0] < $participant_max[0]) {
       $prepare = $bdd -> prepare('INSERT INTO PARTICIPATION(id, email) VALUES(:id, :email)');
       $prepare -> execute([
         'id' => $id,
         'email' => $email
         ]);
+
 
         $query = $bdd -> query('UPDATE TOURNOI SET participant_actuel= participant_actuel+1 WHERE id="'.$id.'"');
 
